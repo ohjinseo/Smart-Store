@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const CryptoJS = require("crypto-js");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -70,8 +71,33 @@ const UserSchema = new mongoose.Schema(
         ref: "Product",
       },
     ],
+
+    cart: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cart",
+    },
   },
   { timestamps: true }
 );
+
+//모델단에서 비밀번호 로직처리
+UserSchema.pre("save", function (next) {
+  this.password = CryptoJS.AES.encrypt(
+    this.password,
+    process.env.PASSWORD_SECRET_KEY
+  ).toString();
+  console.log(this.password);
+  next();
+});
+
+UserSchema.methods.isPasswordMatch = function (currentPassword) {
+  const hashedPassword = CryptoJS.AES.decrypt(
+    this.password,
+    process.env.PASSWORD_SECRET_KEY
+  );
+
+  //공개키보단 해시가 더안전할듯?
+  return hashedPassword.toString(CryptoJS.enc.Utf8) === currentPassword;
+};
 
 module.exports = mongoose.model("User", UserSchema);
