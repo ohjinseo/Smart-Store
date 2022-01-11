@@ -6,7 +6,8 @@ const authController = {
     const { email } = req?.body;
     const user = await User.findOne({ email });
     if (user) {
-      throw new Error("유저가 존재합니다");
+      res.status(409);
+      throw new Error("이미 사용자가 존재합니다");
     }
 
     try {
@@ -17,16 +18,20 @@ const authController = {
     }
   }),
 
-  login: async (req, res, next) => {
-    const { email } = req?.body;
+  login: expressAsyncHandler(async (req, res, next) => {
+    const { email, password } = req?.body;
     const user = await User.findOne({ email });
-    if (user) {
-      next(new Error("유저가 존재합니다"));
+    if (!user) {
+      res.status(404);
+      throw new Error("사용자를 찾지 못하였습니다");
     }
-
-    try {
-    } catch (error) {}
-  },
+    if (user.isPasswordMatch(password)) {
+      res.status(200).json(user);
+    } else {
+      res.status(403);
+      throw new Error("비밀번호가 맞지 않습니다");
+    }
+  }),
 };
 
 module.exports = authController;
