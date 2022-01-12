@@ -33,4 +33,31 @@ const verifyTokenAndAuth = (req, res, next) => {
   });
 };
 
-module.exports = { authMiddleware, verifyTokenAndAuth };
+const verifyTokenAndAdmin = (req, res, next) => {
+  authMiddleware(req, res, () => {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403);
+      throw new Error("인증된 사용자가 아닙니다");
+    }
+  });
+};
+
+const verifyTokenAndSeller = (req, res, next) => {
+  authMiddleware(req, res, () => {
+    if (req.user.isSeller || req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403);
+      throw new Error("인증된 사용자가 아닙니다");
+    }
+  });
+};
+
+module.exports = {
+  authMiddleware,
+  verifyTokenAndAuth,
+  verifyTokenAndAdmin,
+  verifyTokenAndSeller,
+};
