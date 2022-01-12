@@ -1,8 +1,8 @@
 const authController = require("../controllers/authController");
-const { userExistHandler } = require("../middlewares/errorMiddleware");
 
 const router = require("express").Router();
 
-router.post("/register", userExistHandler, authController.register);
+router.post("/register", authController.register);
+router.post("/login", authController.login);
 
 module.exports = router;

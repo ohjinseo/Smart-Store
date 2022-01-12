@@ -86,7 +86,6 @@ UserSchema.pre("save", function (next) {
     this.password,
     process.env.PASSWORD_SECRET_KEY
   ).toString();
-  console.log(this.password);
   next();
 });
 

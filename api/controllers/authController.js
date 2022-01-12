@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const expressAsyncHandler = require("express-async-handler");
+const jwt = require("jsonwebtoken");
 
 const authController = {
   register: expressAsyncHandler(async (req, res) => {
@@ -26,7 +27,18 @@ const authController = {
       throw new Error("사용자를 찾지 못하였습니다");
     }
     if (user.isPasswordMatch(password)) {
-      res.status(200).json(user);
+      const token = jwt.sign(
+        {
+          id: user._id,
+          isSeller: user.isSeller,
+          isAdmin: user.isAdmin,
+        },
+        process.env.JWT_SEC,
+        { expiresIn: "7d" }
+      );
+
+      const { password, ...others } = user._doc;
+      res.status(200).json({ ...others, token });
     } else {
       res.status(403);
       throw new Error("비밀번호가 맞지 않습니다");
