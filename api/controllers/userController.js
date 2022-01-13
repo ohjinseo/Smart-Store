@@ -6,7 +6,7 @@ const userController = {
   //비밀번호 수정
   updatePassword: expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id);
-    console.log(req.user.id);
+
     if (!user.isPasswordMatch(req.body.oldPassword)) {
       res.status(403);
       throw new Error("현재 비밀번호가 맞지 않습니다");
@@ -35,6 +35,22 @@ const userController = {
 
       const { password, ...others } = updatedUser._doc;
       res.status(200).json({ ...others });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }),
+
+  //프로필 수정
+  updateProfile: expressAsyncHandler(async (req, res) => {
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      res.status(200).json(updatedUser);
     } catch (error) {
       res.status(500).json(error);
     }

@@ -5,12 +5,14 @@ const dbConnect = require("./config/dbConnect");
 dotenv.config();
 const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
+const productRouter = require("./routes/productRouter");
 const { errorHandler } = require("./middlewares/errorMiddleware");
 dbConnect();
 
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
 
 app.use(errorHandler);
 
