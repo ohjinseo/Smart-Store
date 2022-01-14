@@ -5,7 +5,7 @@ const Container = styled.div`
   flex:1;
   min-width:380px;
   height: 250px;
-  margin:20px;
+  margin:10px;
   overflow:hidden;
 `;
 const Wrapper = styled.div`
@@ -17,11 +17,10 @@ position:relative;
 `;
 const Image = styled.img`
 position:absolute;
-  width:80%;
-  
+  height:70%;
   object-fit: cover;
   right:-30px;
-  bottom:-130px;
+  bottom:30px;
   
 `;
 const TextBox = styled.div`
@@ -45,7 +44,7 @@ const CategoryBox = ({item}) => {
         <Image src={item.img}/>
         <TextBox>
           <Title>{item.title}</Title>
-          <Desc>Big Sale Twenty Week</Desc>
+          <Desc>{item.desc}</Desc>
         </TextBox>
       </Wrapper>
     </Container>

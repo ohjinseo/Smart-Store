@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {Badge} from '@material-ui/core'
-import {Search, ShoppingCartOutlined} from '@material-ui/icons'
+import {PersonOutlineOutlined, Search, SearchOutlined, ShoppingCartOutlined} from '@material-ui/icons'
 
 const Container = styled.div `
   
@@ -60,24 +60,18 @@ const BadgeItem = styled.div `
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 30px;
+  margin-right: 20px;
 
-  
 `
 
-const UserProfile = styled.div `
+const Icon = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  border-radius: 10px;
+border:2px solid gray;
 `;
 
-const UserProfileImg = styled.img `
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border:2px solid gray;
-  object-fit:cover;
-`;
+
 const Navbar = () => {
     return (
         <Container>
@@ -90,13 +84,15 @@ const Navbar = () => {
                 <Center>
                     <Menu>
                         <MenuItem>NEWEST</MenuItem>
-                        <MenuItem>MEN</MenuItem>
-                        <MenuItem>WOMEN</MenuItem>
+                        <MenuItem>MODELS</MenuItem>
                         <MenuItem>PRODUCT</MenuItem>
-                        <MenuItem>SHOPPING BAG</MenuItem>
+                        <MenuItem>SERVICES</MenuItem>
+                        <MenuItem>DISCOVER</MenuItem>
                     </Menu>
                 </Center>
                 <Right>
+
+                  
                     
                     <BadgeItem>
 
@@ -105,9 +101,9 @@ const Navbar = () => {
                         </Badge>
                     </BadgeItem>
 
-                    <UserProfile>
-                      <UserProfileImg src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"/>
-                    </UserProfile>
+                    <Icon>
+                      <PersonOutlineOutlined color="action"/>
+                    </Icon>
 
                 </Right>
             </Wrapper>

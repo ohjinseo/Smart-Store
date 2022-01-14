@@ -23,6 +23,56 @@ export const sliderItems = [
   },
 ];
 
+export const carData = [
+  {
+    id: 1,
+    img: "https://i.ibb.co/5Kjtz1B/pngegg-2.png",
+    title: "BMW",
+    desc: "X7",
+    bgColor: "#e2eef1",
+  },
+
+  {
+    id: 2,
+    img: "https://i.ibb.co/LPGzsZz/pngegg-4.png",
+    title: "BENZ",
+    desc: "AMG GLC CLASS",
+    bgColor: "#eedfdf",
+  },
+
+  {
+    id: 3,
+    img: "https://i.ibb.co/BTwbzcZ/pngegg-7.png",
+    title: "BMW",
+    desc: "NEW SERIES",
+    bgColor: "#f3f3f3",
+  },
+
+  {
+    id: 4,
+    img: "https://i.ibb.co/qyqTNc7/pngegg-3.png",
+    title: "BMW",
+    desc: "K1600GA",
+    bgColor: "#e7edf5",
+  },
+
+  {
+    id: 5,
+    img: "https://i.ibb.co/qyqTNc7/pngegg-3.png",
+    title: "BMW",
+    desc: "K1600GA",
+    bgColor: "#e7edf5",
+  },
+
+  {
+    id: 6,
+    img: "https://i.ibb.co/qyqTNc7/pngegg-3.png",
+    title: "BMW",
+    desc: "K1600GA",
+    bgColor: "#e7edf5",
+  },
+];
+
 export const categoryData = [
   {
     id: 1,

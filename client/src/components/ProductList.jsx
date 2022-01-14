@@ -1,29 +1,20 @@
 import styled from "styled-components";
-import { categoryData } from '../dummy';
-import CategoryBox from './CategoryBox';
+import ProductBox from './ProductBox';
 
 const Container = styled.div`
-
-`;
-const Wrapper = styled.div`
-  padding:0 100px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`
+  flex-wrap:wrap;
+  justify-content: space-around;
+  
+`;
+
 const ProductList = () => {
   return (
     <Container>
-      <Wrapper>
-{
-  categoryData.map(item=>(
-    
-    <CategoryBox item={item}/>
-  ))
-}
-     
-      
-      </Wrapper>
+      <ProductBox />
+      <ProductBox />
+      <ProductBox />
+      <ProductBox />
     </Container>
   )
 }
