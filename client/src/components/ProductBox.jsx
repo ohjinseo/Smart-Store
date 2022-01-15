@@ -7,6 +7,7 @@ const Container = styled.div`
   margin:30px 10px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 80px;
   `;
 const Top = styled.div`
   width:100%;
@@ -33,7 +34,7 @@ const Title = styled.h3`
   margin-bottom: 5px;
 `;
 const Price = styled.span`
-  color:teal;
+  
   font-weight: 600;
   font-size: 22px;
 `;

@@ -6,11 +6,14 @@ const Container = styled.div`
   flex-wrap:wrap;
   justify-content: space-around;
   
+  
 `;
 
 const ProductList = () => {
   return (
     <Container>
+      <ProductBox />
+      <ProductBox />
       <ProductBox />
       <ProductBox />
       <ProductBox />

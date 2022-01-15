@@ -125,12 +125,8 @@ const Footer = () => {
                     <LeftTextBox>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur saepe eveniet quidem illo commodi? Consequatur aspernatur voluptate suscipit dolor quae enim consectetur at provident dolorem quidem repellendus fugiat, quaerat voluptatibus?</LeftTextBox>
                 </Left>
                 <Right>
-                
-                   
-                
-
-                  
-                  <ContactItems>
+              
+                  {/* <ContactItems>
                     <ContactItem>
                       <Icon><LocationOn/></Icon>
                       <ContactItemText>Busan Jingoo Dongeul</ContactItemText>
@@ -153,7 +149,7 @@ const Footer = () => {
                         <MenuItem>MY INFO</MenuItem>
                         <MenuItem>CART</MenuItem>
                         <MenuItem last="none">BLOG</MenuItem>
-                    </Menu>
+                    </Menu> */}
                 </Right>
             </Wrapper>
         </Container>

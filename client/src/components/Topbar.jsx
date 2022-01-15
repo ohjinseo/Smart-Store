@@ -26,9 +26,10 @@ align-items: center;
 const LeftBox = styled.div `
 position:absolute;
 height:100%;
-left:80px;
+left:140px;
   display: flex;
   align-items: center;
+  
 `;
 const Language = styled.div `
 font-size: 14px;
