@@ -1,5 +1,6 @@
 import {ArrowDropDownOutlined} from '@material-ui/icons';
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 const Container = styled.div `
   height:37px;
@@ -69,6 +70,7 @@ const Login = styled.button `
   font-weight: 300;
   border:none;
   margin-right: 10px;
+  cursor: pointer;
 `;
 const Register = styled.button `
   background-color:black;
@@ -77,6 +79,7 @@ const Register = styled.button `
   font-weight: 300;
   border:none;
   margin-right: 10px;
+  cursor: pointer;
 `;
 
 const Topbar = () => {
@@ -98,8 +101,13 @@ const Topbar = () => {
                 </Center>
 
                 <Right>
+                  <Link to="/login" style={{textDecoration:"none", color:"inherit"}} >
+
                     <Login>LOGIN</Login>
+                  </Link>
+                  <Link to="/register" style={{textDecoration:"none", color:"inherit"}} >
                     <Register>REGISTER</Register>
+                    </Link>
                 </Right>
             </Wrapper>
         </Container>

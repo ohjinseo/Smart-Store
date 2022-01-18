@@ -20,8 +20,7 @@ const TitleBox = styled.div `
     justify-content: space-between;
     margin-bottom: 50px;
     align-items: center;
-   
-    
+
 `;
 
 const Title = styled.h1 `

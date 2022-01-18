@@ -10,6 +10,8 @@ import {
   Redirect,
   Navigate
 } from "react-router-dom";
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="/products/:category" element={<Products/>} />
         <Route path="/product/:id" element={<Product/>} />
         <Route path="/cart" element={<Cart/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
       </Routes>
     </Router>
   )
