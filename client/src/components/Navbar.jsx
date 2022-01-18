@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {Badge} from '@material-ui/core'
-import {PersonOutlineOutlined, Search, SearchOutlined, ShoppingCartOutlined} from '@material-ui/icons'
+import {PersonOutlineOutlined, ShoppingCartOutlined} from '@material-ui/icons'
+import {Link} from 'react-router-dom';
 
 const Container = styled.div `
   
@@ -55,7 +56,6 @@ const Right = styled.div `
  justify-content: center;
 `
 
-
 const BadgeItem = styled.div `
   display: flex;
   justify-content: center;
@@ -64,22 +64,29 @@ const BadgeItem = styled.div `
 
 `
 
-const Icon = styled.div`
+const Icon = styled.div `
   display: flex;
   align-items: center;
   border-radius: 10px;
 border:2px solid gray;
 `;
 
-
 const Navbar = () => {
     return (
         <Container>
             <Wrapper>
                 <Left>
-                    <Logo>
-                        SMART-STORE
-                    </Logo>
+                    <Link
+                        to="/"
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit"
+                        }}>
+
+                        <Logo>
+                            SMART-STORE
+                        </Logo>
+                    </Link>
                 </Left>
                 <Center>
                     <Menu>
@@ -91,18 +98,17 @@ const Navbar = () => {
                     </Menu>
                 </Center>
                 <Right>
+                    <Link to="/cart" style={{textDecoration:"none", color:"inherit"}}>
 
-                  
-                    
                     <BadgeItem>
-
                         <Badge badgeContent={1} color="primary">
                             <ShoppingCartOutlined color="action"/>
                         </Badge>
                     </BadgeItem>
+                    </Link>
 
                     <Icon>
-                      <PersonOutlineOutlined color="action"/>
+                        <PersonOutlineOutlined color="action"/>
                     </Icon>
 
                 </Right>

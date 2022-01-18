@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -39,7 +40,9 @@ const Desc = styled.span`
 
 const CategoryBox = ({item}) => {
   return (
+    
     <Container bgColor={item.bgColor}>
+      <Link to="/products/nike" style={{textDecoration:"none", color:"inherit"}}>
       <Wrapper>
         <Image src={item.img}/>
         <TextBox>
@@ -47,6 +50,7 @@ const CategoryBox = ({item}) => {
           <Desc>{item.desc}</Desc>
         </TextBox>
       </Wrapper>
+    </Link>
     </Container>
   )
 }
