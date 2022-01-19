@@ -183,7 +183,7 @@ const Product = () => {
 
             <Wrapper>
                 <Left>
-                    <Image src="https://i.ibb.co/q1zBpFs/pngegg-18.png"></Image>
+                    <Image src="https://i.ibb.co/NsxfVLt/pngegg-19.png"></Image>
                 </Left>
 
                 <Right>

@@ -7,8 +7,10 @@ const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
 const productRouter = require("./routes/productRouter");
 const { errorHandler } = require("./middlewares/errorMiddleware");
+const cors = require("cors");
 dbConnect();
 
+app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);

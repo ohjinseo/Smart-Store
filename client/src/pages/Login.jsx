@@ -1,7 +1,10 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
+import { login } from '../redux/authApiCall';
 
 const Container = styled.div`
   
@@ -41,10 +44,27 @@ const Button = styled.button`
   background-color:black;
   color:white;
   border:none;
+  margin-bottom: 20px;
 `;
+
+const ErrorMessage = styled.span`
+  color:red;
+  display: flex;
+  justify-content: center;
+`
 
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const [isLoading, error, errorMessage] = useSelector(state =>state);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(dispatch, {email, password});
+  }
+
   return (
     <Container>
       <Topbar />
@@ -52,9 +72,10 @@ const Login = () => {
       <Wrapper>
           <Title>LOGIN</Title>
         <LoginForm>
-          <Email placeholder='Email'></Email>
-          <Password placeholder='Password' type="password"></Password>
-          <Button>LOGIN</Button>
+          <Email placeholder='Email' onChange={e=>setEmail(e.target.value)}></Email>
+          <Password placeholder='Password' type="password" onChange={e=>setPassword(e.target.value)}></Password>
+          <Button onClick={handleSubmit}>LOGIN</Button>
+          {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </LoginForm>
       </Wrapper>
       <Footer />

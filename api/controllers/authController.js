@@ -19,11 +19,11 @@ const authController = {
     }
   }),
 
-  login: expressAsyncHandler(async (req, res, next) => {
+  login: expressAsyncHandler(async (req, res) => {
     const { email, password } = req?.body;
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(404);
+      res.status(401);
       throw new Error("사용자를 찾지 못하였습니다");
     }
     if (user.isPasswordMatch(password)) {

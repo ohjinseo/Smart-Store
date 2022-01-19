@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
 
 const Container = styled.div`
-  
 `;
 
 const Wrapper = styled.div`
