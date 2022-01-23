@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
-import { login } from '../redux/authApiCall';
+import { loginUserAction } from '../redux/slices/users/userSlices';
+
 
 const Container = styled.div`
   
@@ -58,12 +60,20 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const [isLoading, error, errorMessage] = useSelector(state =>state);
+  const navigate = useNavigate(); 
+
+  const res =  useSelector(state=>state.usersReducer);
+  const {userAppErr, userAuth, userLoading, userServerErr} = res;
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(dispatch, {email, password});
+    dispatch(loginUserAction({email, password}))
   }
+
+  useEffect(()=> {
+    userAuth && navigate("/");
+  }, [userAuth])
 
   return (
     <Container>
@@ -75,7 +85,7 @@ const Login = () => {
           <Email placeholder='Email' onChange={e=>setEmail(e.target.value)}></Email>
           <Password placeholder='Password' type="password" onChange={e=>setPassword(e.target.value)}></Password>
           <Button onClick={handleSubmit}>LOGIN</Button>
-          {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
+          
         </LoginForm>
       </Wrapper>
       <Footer />

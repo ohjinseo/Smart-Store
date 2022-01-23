@@ -7,8 +7,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Redirect,
-  Navigate
 } from "react-router-dom";
 import Register from './pages/Register';
 import Login from './pages/Login';

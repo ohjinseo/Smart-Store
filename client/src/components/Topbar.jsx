@@ -1,14 +1,14 @@
 import {ArrowDropDownOutlined} from '@material-ui/icons';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import {useSelector} from 'react-redux';
 
 const Container = styled.div `
   height:37px;
   background-color:black;
-  
 `;
-const Wrapper = styled.div `
 
+const Wrapper = styled.div `
 padding:0 30px;
 display: flex;
 position:relative;
@@ -22,24 +22,23 @@ flex:1;
 display: flex;
 justify-content: center;
 align-items: center;
-
 `;
+
 const LeftBox = styled.div `
-position:absolute;
-height:100%;
-left:140px;
+  position:absolute;
+  height:100%;
+  left:140px;
   display: flex;
   align-items: center;
-  
 `;
+
 const Language = styled.div `
-font-size: 14px;
+  font-size: 14px;
   font-weight: 300;
 `;
 
-const Center = styled.div`
+const Center = styled.div `
   width: 100%;
-  
 `;
 
 const Title = styled.div `
@@ -53,6 +52,7 @@ const Title = styled.div `
   font-size: 14px;
   font-weight: 300;
 `;
+
 const Right = styled.div `
   flex:1;
   display: flex;
@@ -63,6 +63,7 @@ const Right = styled.div `
   right:80px;
   height:100%;
 `;
+
 const Login = styled.button `
   background-color:black;
   color:white;
@@ -72,6 +73,7 @@ const Login = styled.button `
   margin-right: 10px;
   cursor: pointer;
 `;
+
 const Register = styled.button `
   background-color:black;
   color:white;
@@ -82,7 +84,19 @@ const Register = styled.button `
   cursor: pointer;
 `;
 
+const Logout = styled.button `
+  background-color:black;
+  color:white;
+  font-size: 14px;
+  font-weight: 300;
+  border:none;
+  margin-right: 30px;
+  cursor: pointer;
+`;
+
 const Topbar = () => {
+    const {userAuth} = useSelector(state => state.usersReducer);
+
     return (
         <Container>
             <Wrapper>
@@ -101,13 +115,27 @@ const Topbar = () => {
                 </Center>
 
                 <Right>
-                  <Link to="/login" style={{textDecoration:"none", color:"inherit"}} >
+                    {
+                        userAuth
+                            ? (<Logout>LOGOUT</Logout>)
+                            : (
+                                <> < Link to = "/login" style = {{
+                          textDecoration: "none",
+                          color: "inherit"
+                        }} > <Login>LOGIN</Login>
+                            </Link>
+                            <Link
+                                to="/register"
+                                style={{
+                                    textDecoration: "none",
+                                    color: "inherit"
+                                }}>
+                                <Register>REGISTER</Register>
+                            </Link>
+                        </>
+                            )
+                    }
 
-                    <Login>LOGIN</Login>
-                  </Link>
-                  <Link to="/register" style={{textDecoration:"none", color:"inherit"}} >
-                    <Register>REGISTER</Register>
-                    </Link>
                 </Right>
             </Wrapper>
         </Container>
