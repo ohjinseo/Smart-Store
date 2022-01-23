@@ -1,7 +1,8 @@
 import {ArrowDropDownOutlined} from '@material-ui/icons';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { logout } from '../redux/slices/users/userSlices';
 
 const Container = styled.div `
   height:37px;
@@ -96,6 +97,13 @@ const Logout = styled.button `
 
 const Topbar = () => {
     const {userAuth} = useSelector(state => state.usersReducer);
+    const dispatch = useDispatch();
+
+    const handleLogout = (e) => {
+      e.preventDefault();
+      dispatch(logout());
+    
+    }
 
     return (
         <Container>
@@ -117,7 +125,7 @@ const Topbar = () => {
                 <Right>
                     {
                         userAuth
-                            ? (<Logout>LOGOUT</Logout>)
+                            ? (<Logout onClick={handleLogout}>LOGOUT</Logout>)
                             : (
                                 <> < Link to = "/login" style = {{
                           textDecoration: "none",

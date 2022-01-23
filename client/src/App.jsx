@@ -7,11 +7,14 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate
 } from "react-router-dom";
 import Register from './pages/Register';
 import Login from './pages/Login';
+import { useSelector } from 'react-redux';
 
 const App = () => {
+  const {userAuth} = useSelector(state => state.usersReducer);
   return (
     <Router>
       <Routes>
@@ -19,8 +22,8 @@ const App = () => {
         <Route path="/products/:category" element={<Products/>} />
         <Route path="/product/:id" element={<Product/>} />
         <Route path="/cart" element={<Cart/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
+        <Route path="/login" element={userAuth ? <Navigate to="/" /> : <Login/>} />
+        <Route path="/register" element={userAuth ? <Navigate to="/"/> : <Register/>} />
       </Routes>
     </Router>
   )
