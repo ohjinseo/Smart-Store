@@ -6,22 +6,36 @@ const UserSchema = new mongoose.Schema(
     //이름
     name: {
       type: String,
-      required: true,
-      maxlength: 50,
+      required: [true, "이름을 작성해 주세요."],
+      maxlength: [50, "이름의 최대 길이는 50자리 입니다."],
     },
 
     //이메일
     email: {
       type: String,
-      required: true,
+      required: [true, "이메일을 작성해 주세요."],
       unique: true,
+      validate: {
+        validator: function (v) {
+          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+        },
+        message: (props) => "이메일 주소가 유효하지 않습니다",
+      },
     },
 
     //패스워드
     password: {
       type: String,
-      required: true,
-      minlength: 6,
+      required: [true, "비밀번호를 작성해 주세요."],
+      validate: {
+        validator: function (v) {
+          return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/.test(
+            v
+          );
+        },
+        message: (props) =>
+          "8~16자 영문 대 소문자 / 숫자 / 특수문자를 사용하세요",
+      },
     },
 
     //소개

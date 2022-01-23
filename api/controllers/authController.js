@@ -11,11 +11,18 @@ const authController = {
       throw new Error("이미 사용자가 존재합니다");
     }
 
+    if (req.body.password !== req.body.checkPassword) {
+      throw new Error("비밀번호가 일치하지 않습니다.");
+    }
+
+    const { checkPassword, ...reqUser } = req.body;
+
     try {
-      const newUser = await User.create(req.body);
+      const newUser = await User.create(reqUser);
       res.status(200).json(newUser);
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500);
+      throw new Error(error?.message?.split(/:|,/)[2].trim()); //가장 최초의 오류를 던진다
     }
   }),
 
