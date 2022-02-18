@@ -80,21 +80,20 @@ const ProductBox = styled.div `
     
 `;
 
-const ProductImageAndDetailBox = styled.div`
+const ProductImageAndDetailBox = styled.div `
     flex:3;
     display: flex;
 `;
 
-const ProductImageBox = styled.div`
+const ProductImageBox = styled.div `
 flex:.9;
 display: flex;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-    height:100px;
-    padding:22px 0;
-    background-color:#ececec;
-    
+justify-content: center;
+position: relative;
+overflow: hidden;
+height:100px;
+padding:22px 0;
+background-color:#ececec;
 `;
 
 const ProductImage = styled.img `
@@ -143,7 +142,7 @@ const ProductColor = styled.div `
     margin-right: 10px;
 `;
 
-const ProductColorText = styled.div`
+const ProductColorText = styled.div `
     color:gray;
     font-size: 14px;
     font-weight: 200;
@@ -323,57 +322,19 @@ const Cart = () => {
                     <ProductBox>
                         <ProductImageAndDetailBox>
 
-                        <ProductImageBox>
+                            <ProductImageBox>
 
-                            <ProductImage src="https://i.ibb.co/q1zBpFs/pngegg-18.png"/>
-                        </ProductImageBox>
-                        <ProductDetail>
-                            <ProductTitle>NIKE AIR SHOSES</ProductTitle>
-                            <ProductBrand>NIKE</ProductBrand>
-                        </ProductDetail>
+                                <ProductImage src="https://i.ibb.co/q1zBpFs/pngegg-18.png"/>
+                            </ProductImageBox>
+                            <ProductDetail>
+                                <ProductTitle>NIKE AIR SHOSES</ProductTitle>
+                                <ProductBrand>NIKE</ProductBrand>
+                            </ProductDetail>
                         </ProductImageAndDetailBox>
 
                         <ProductColorBox>
                             <ProductColor color="yellow"></ProductColor>
-                           
-                        </ProductColorBox>
 
-                        <ProductSizeBox>
-                            <ProductSize>M</ProductSize>
-                        </ProductSizeBox>
-
-                        <ProductAmountBox>
-                            <CountIcon><Remove/></CountIcon>
-                            <Count>1</Count>
-                            <CountIcon><Add/></CountIcon>
-                        </ProductAmountBox>
-
-                        <ProductPriceBox>
-                            <ProductPrice>$192.44</ProductPrice>
-                        </ProductPriceBox>
-
-                        {/* <ProductCancel>
-                            <ProductCancelIcon><CancelOutlined/></ProductCancelIcon>
-                        </ProductCancel> */
-                        }
-                    </ProductBox>
-
-
-                    <ProductBox>
-                        <ProductImageAndDetailBox>
-
-                        <ProductImageBox>
-
-                            <ProductImage src="https://i.ibb.co/XFGzVW2/pngegg-17.png"/>
-                        </ProductImageBox>
-                        <ProductDetail>
-                            <ProductTitle>NIKE AIR SHOSES</ProductTitle>
-                            <ProductBrand>NIKE</ProductBrand>
-                        </ProductDetail>
-                        </ProductImageAndDetailBox>
-
-                        <ProductColorBox>
-                            <ProductColor color="yellow"></ProductColor>
                         </ProductColorBox>
 
                         <ProductSizeBox>
@@ -399,14 +360,51 @@ const Cart = () => {
                     <ProductBox>
                         <ProductImageAndDetailBox>
 
-                        <ProductImageBox>
+                            <ProductImageBox>
 
-                            <ProductImage src="https://i.ibb.co/9r5hGdX/Pngegg-6.png"/>
-                        </ProductImageBox>
-                        <ProductDetail>
-                            <ProductTitle>NIKE AIR SHOSES</ProductTitle>
-                            <ProductBrand>NIKE</ProductBrand>
-                        </ProductDetail>
+                                <ProductImage src="https://i.ibb.co/XFGzVW2/pngegg-17.png"/>
+                            </ProductImageBox>
+                            <ProductDetail>
+                                <ProductTitle>NIKE AIR SHOSES</ProductTitle>
+                                <ProductBrand>NIKE</ProductBrand>
+                            </ProductDetail>
+                        </ProductImageAndDetailBox>
+
+                        <ProductColorBox>
+                            <ProductColor color="yellow"></ProductColor>
+                        </ProductColorBox>
+
+                        <ProductSizeBox>
+                            <ProductSize>M</ProductSize>
+                        </ProductSizeBox>
+
+                        <ProductAmountBox>
+                            <CountIcon><Remove/></CountIcon>
+                            <Count>1</Count>
+                            <CountIcon><Add/></CountIcon>
+                        </ProductAmountBox>
+
+                        <ProductPriceBox>
+                            <ProductPrice>$192.44</ProductPrice>
+                        </ProductPriceBox>
+
+                        {/* <ProductCancel>
+                            <ProductCancelIcon><CancelOutlined/></ProductCancelIcon>
+                        </ProductCancel> */
+                        }
+                    </ProductBox>
+
+                    <ProductBox>
+                        <ProductImageAndDetailBox>
+
+                            <ProductImageBox>
+
+                                <ProductImage src="https://i.ibb.co/9r5hGdX/Pngegg-6.png"/>
+                            </ProductImageBox>
+                            <ProductDetail>
+                                <ProductTitle>NIKE AIR SHOSES</ProductTitle>
+                                <ProductBrand>NIKE</ProductBrand>
+                            </ProductDetail>
                         </ProductImageAndDetailBox>
 
                         <ProductColorBox>
@@ -433,8 +431,6 @@ const Cart = () => {
                         }
                     </ProductBox>
 
-
-                    
                 </Left>
 
                 <Right>

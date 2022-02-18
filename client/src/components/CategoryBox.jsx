@@ -1,58 +1,89 @@
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import styled from "styled-components";
 
-const Container = styled.div`
-  background-color:${props=>props.bgColor};
+const Container = styled.div `
+  background-color:${props => props.bgColor};
   flex:1;
   min-width:380px;
   height: 250px;
   margin:10px;
   overflow:hidden;
+  
 `;
-const Wrapper = styled.div`
+
+const Wrapper = styled.div `
 height:100%;
 padding:20px;
 display: flex;
-position:relative;
+`;
 
+const Left = styled.div `
+  flex:1;
+  display: flex;
+  align-items: center
 `;
-const Image = styled.img`
-position:absolute;
-  height:70%;
-  object-fit: cover;
-  right:-30px;
-  bottom:30px;
-  
+
+const TextBox = styled.div `
+  background-color: white;
+  width:120px;
+  padding:5px 0;
+  margin-right: 10px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
 `;
-const TextBox = styled.div`
-  position:absolute;
-  bottom:100px;
-`;
-const Title = styled.h1`
+
+const Title = styled.h1 `
   font-weight: 400;
   font-size: 25px;
   margin-bottom: 10px;
 `;
-const Desc = styled.span`
+
+const Desc = styled.span `
   color:gray;
   font-size: 14px;
 `;
 
+const Right = styled.div `
+  flex:2;
+`;
+
+const Image = styled.img `
+  max-height:80%;
+  object-fit: cover;
+  margin-top: 20px;
+`;
+
+
+
 const CategoryBox = ({item}) => {
-  return (
-    
-    <Container bgColor={item.bgColor}>
-      <Link to="/products/nike" style={{textDecoration:"none", color:"inherit"}}>
-      <Wrapper>
-        <Image src={item.img}/>
-        <TextBox>
-          <Title>{item.title}</Title>
-          <Desc>{item.desc}</Desc>
-        </TextBox>
-      </Wrapper>
-    </Link>
-    </Container>
-  )
+    return (
+
+        <Container bgColor={item.bgColor}>
+            <Link
+                to="/products/nike"
+                style={{
+                    textDecoration: "none",
+                    color: "inherit"
+                }}>
+                <Wrapper>
+                    <Left>
+                        <TextBox>
+                            <Title>{item.title}</Title>
+                            <Desc>{item.desc}</Desc>
+                        </TextBox>
+                    </Left>
+
+                    <Right>
+                        <Image src={item.img}/>
+                    </Right>
+
+                </Wrapper>
+            </Link>
+        </Container>
+    )
 }
 
 export default CategoryBox

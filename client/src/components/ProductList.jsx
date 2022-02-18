@@ -27,7 +27,7 @@ const ProductList = ({kind}) => {
 
   return (
     <Container>
-     {products && products.map((item) => (<ProductBox data={item} key={item._id}/>))}
+      {products && products.map((item) => (<ProductBox data={item} key={item._id}/>))}
     </Container>
   )
 }
