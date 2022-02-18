@@ -12,9 +12,10 @@ const productController = {
     }
   }),
 
+  //상품 인기순 / 최신순 8개 / 최신순 전체 가져오기
   getProducts: expressAsyncHandler(async (req, res) => {
-    const kind = req.query.kind;
-    console.log(kind);
+    const kind = req.query.kind; //new or popular
+
     try {
       let products;
 
@@ -22,10 +23,11 @@ const productController = {
         products = await Product.find({}).sort({ createdAt: "desc" }).limit(8);
       } else if (kind === "popular") {
         products = await Product.find({}).sort({ sold: -1 }).limit(8);
+      } else {
+        products = await Product.find({}).sort({ createdAt: "desc" });
       }
       res.status(200).json(products);
     } catch (error) {
-      console.log(error);
       res.status(500).json(error);
     }
   }),
