@@ -9,12 +9,14 @@ const Container = styled.div `
   display: flex;
   flex-direction: column;
   margin-bottom: 80px;
-  background-color: red;
+  justify-content: center;
+  align-items: center;
+  
   `;
 
 const Wrapper = styled.div `
-    min-width:350px;
-  height: 450px;
+    width:370px;
+    height: 450px;
   `;
 
 const Top = styled.div `
@@ -27,7 +29,8 @@ const Top = styled.div `
 `;
 
 const Image = styled.img `
-  height:95%;
+  max-width: 90%; 
+  max-height:90%;
   object-fit: cover;
 `;
 
@@ -51,7 +54,8 @@ const Price = styled.span `
   font-size: 22px;
 `;
 
-const ProductBox = () => {
+const ProductBox = ({data}) => {
+  console.log(data);
     return (
 
         <Container>
@@ -64,11 +68,11 @@ const ProductBox = () => {
                 <Wrapper>
 
                     <Top>
-                        <Image src="https://i.ibb.co/NsxfVLt/pngegg-19.png"/>
+                        <Image src={data?.img}/>
                     </Top>
                     <Bottom>
                         <Title>
-                            Muscle Fit Jumper
+                            {data?.title}
                         </Title>
 
                         <Price>$22.99</Price>

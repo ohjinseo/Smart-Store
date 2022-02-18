@@ -11,6 +11,24 @@ const productController = {
       res.status(500).json(error);
     }
   }),
+
+  getProducts: expressAsyncHandler(async (req, res) => {
+    const kind = req.query.kind;
+    console.log(kind);
+    try {
+      let products;
+
+      if (kind === "new") {
+        products = await Product.find({}).sort({ createdAt: "desc" }).limit(8);
+      } else if (kind === "popular") {
+        products = await Product.find({}).sort({ sold: -1 }).limit(8);
+      }
+      res.status(200).json(products);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
+  }),
 };
 
 module.exports = productController;

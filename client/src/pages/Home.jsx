@@ -33,9 +33,9 @@ const Home = () => {
             <CategoryList/>
             <ProductContainer>
                 <Title>LATEST</Title>
-                <ProductList/>
-                <Title>TOP RATING</Title>
-                <ProductList/>
+                <ProductList kind={"new"}/>
+                <Title >TOP RATING</Title>
+                <ProductList kind={"popular"}/>
             </ProductContainer>
             <Footer />
         </div>
