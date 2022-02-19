@@ -22,30 +22,24 @@ const cartController = {
       const productId = req.body.productId;
       const kind = req.query.kind;
       let duplicate = false;
+      let productObjId;
 
-      Cart.findOne({ _id: cartId }, (err, cart) => {
-        cart.products.forEach((product) => {
+      // Query was already executed => 몽구스는 동일한 쿼리 인스턴스 2번 실행안됨 => clone()으로 인스턴스 복제
+      // findOne() 컬백 함수 비동기 문제 => findOne()의 결과값을 return하며, 컬백함수는 비동기 적용안됨 => 함수에 promise 구문 적용
+
+      cart = await Cart.findOne({ _id: cartId }, async (err, cart) => {
+        await cart.products.forEach((product) => {
           if (productId === product.productId.toString()) {
+            productObjId = product.productId;
             duplicate = true;
-            product.amount += 1;
           }
         });
-      });
-
-      Cart.findOne({ _id: cartId })
-        .populate({
-          path: "products.productId",
-          model: "Product",
-        })
-        .exec((err, data) => {
-          data?.products.forEach((product) => {
-            if (productId === product.productId._id.toString()) {
-              duplicate = true;
-            }
-          });
-        });
+      })
+        .clone()
+        .then(() => {});
 
       if (!duplicate) {
+        console.log("second");
         if (kind === "add") {
           cart = await Cart.findByIdAndUpdate(
             cartId,
@@ -55,7 +49,6 @@ const cartController = {
             { new: true }
           );
         }
-
         if (kind === "delete") {
           cart = await Cart.findByIdAndUpdate(
             cartId,
