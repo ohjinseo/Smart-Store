@@ -23,11 +23,11 @@ const cartController = {
       const kind = req.query.kind;
       let duplicate = false;
 
-      cart = Cart.findOne({ _id: cartId }, (err, cart) => {
+      Cart.findOne({ _id: cartId }, (err, cart) => {
         cart.products.forEach((product) => {
-          if (product.productId === productId) {
-            product.amount += 1;
+          if (productId === product.productId.toString()) {
             duplicate = true;
+            product.amount += 1;
           }
         });
       });
@@ -37,7 +37,13 @@ const cartController = {
           path: "products.productId",
           model: "Product",
         })
-        .exec((err, data) => console.log("%j", data));
+        .exec((err, data) => {
+          data?.products.forEach((product) => {
+            if (productId === product.productId._id.toString()) {
+              duplicate = true;
+            }
+          });
+        });
 
       if (!duplicate) {
         if (kind === "add") {
