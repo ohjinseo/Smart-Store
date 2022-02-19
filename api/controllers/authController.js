@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const expressAsyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
+const Cart = require("../models/Cart");
 
 const authController = {
   register: expressAsyncHandler(async (req, res) => {
@@ -18,6 +19,10 @@ const authController = {
     const { checkPassword, ...reqUser } = req.body;
 
     try {
+      const newCart = await Cart.create();
+      console.log(newCart);
+      reqUser.cart = newCart._id;
+
       const newUser = await User.create(reqUser);
       res.status(200).json(newUser);
     } catch (error) {

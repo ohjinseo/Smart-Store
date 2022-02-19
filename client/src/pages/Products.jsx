@@ -87,7 +87,7 @@ const ColorItem = styled.div `
   background-color:${props=>props.color};
   margin-right: 15px;
   margin-bottom:15px;
- 
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 `;
 
 const Brand = styled.div ``;
@@ -121,7 +121,6 @@ const TitleBox = styled.div `
 
 const Title = styled.h1 `
   font-weight: 300;
-  
 `;
 
 const Select = styled.select `
