@@ -7,6 +7,7 @@ const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
 const cartRouter = require("./routes/cartRouter");
 const productRouter = require("./routes/productRouter");
+const orderRouter = require("./routes/orderRouter");
 const { errorHandler } = require("./middlewares/errorMiddleware");
 const cors = require("cors");
 dbConnect();
@@ -17,6 +18,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
+app.use("/api/orders", orderRouter);
 
 app.use(errorHandler);
 

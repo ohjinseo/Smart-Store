@@ -9,7 +9,8 @@ const OrderShcema = new mongoose.Schema(
     products: [
       {
         productId: {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
         },
         quantity: {
           type: Number,
@@ -17,17 +18,13 @@ const OrderShcema = new mongoose.Schema(
         },
       },
     ],
-    amount: {
+    price: {
       type: Number,
       required: true,
     },
     address: {
       type: Object,
       required: true,
-    },
-    status: {
-      type: String,
-      default: "pending",
     },
   },
   { timestamps: true }

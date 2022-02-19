@@ -5,7 +5,8 @@ const {
 } = require("../middlewares/authMiddleware");
 const router = require("express").Router();
 
-router.post("/:id", verifyTokenAndAuth, cartController.register);
-router.put("/:cartId", authMiddleware, cartController.update);
+router.post("/:userId", verifyTokenAndAuth, cartController.register);
+router.put("/:userId", verifyTokenAndAuth, cartController.update);
+router.get("/:userId", verifyTokenAndAuth, cartController.getCart);
 
 module.exports = router;
