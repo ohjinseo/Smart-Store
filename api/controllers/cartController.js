@@ -12,7 +12,7 @@ const cartController = {
     }
   }),
 
-  // 카트에 물건 추가 및 삭제
+  // 카트에 물건 추가 및 삭제 [kind : all / add / delete]
   update: expressAsyncHandler(async (req, res) => {
     try {
       let cart;
@@ -22,9 +22,6 @@ const cartController = {
       let duplicate = false;
       let productObjId;
 
-      // Query was already executed => 몽구스는 동일한 쿼리 인스턴스 2번 실행안됨 => clone()으로 인스턴스 복제
-      // findOne() 컬백 함수 비동기 문제 => 몽구스 메소드에 컬백을 전달해서는 안된다.
-
       cart = await Cart.findOne({ _id: cartId });
 
       !cart && res.status(500).json("카트 정보를 찾을 수 없습니다.");
@@ -32,17 +29,29 @@ const cartController = {
       if (cart.userId !== req.user.id) {
         res.status(500).json("사용자 카트가 아닙니다.");
       }
+      //if문 도배 수정 시급
+      if (kind === "all") {
+        cart = await Cart.findByIdAndUpdate(
+          cartId,
+          {
+            $pull: {
+              products: {
+                productId,
+              },
+            },
+          },
+          { new: true }
+        );
+      } else {
+        cart?.products.forEach((product) => {
+          console.log("first");
+          if (productId === product.productId.toString()) {
+            productObjId = product.productId;
+            duplicate = true;
+          }
+        });
 
-      cart?.products.forEach((product) => {
-        console.log("first");
-        if (productId === product.productId.toString()) {
-          productObjId = product.productId;
-          duplicate = true;
-        }
-      });
-
-      if (duplicate) {
-        if (kind === "add") {
+        if (duplicate && kind === "add") {
           cart = await Cart.findOneAndUpdate(
             {
               _id: cartId,
@@ -55,7 +64,7 @@ const cartController = {
             },
             { new: true }
           );
-        } else if (kind === "delete") {
+        } else if (duplicate && kind === "delete") {
           cart = await Cart.findOneAndUpdate(
             {
               _id: cartId,
@@ -69,10 +78,8 @@ const cartController = {
             { new: true }
           );
         }
-      }
 
-      if (!duplicate) {
-        if (kind === "add") {
+        if (!duplicate && kind === "add") {
           console.log(cartId, productId);
           cart = await Cart.findByIdAndUpdate(
             cartId,
@@ -85,7 +92,7 @@ const cartController = {
             },
             { new: true }
           );
-        } else if (kind === "delete") {
+        } else if (!duplicate && kind === "delete") {
           cart = await Cart.findByIdAndUpdate(
             cartId,
             {
