@@ -19,7 +19,19 @@ const authController = {
 
     try {
       const newUser = await User.create(reqUser);
-      res.status(200).json(newUser);
+
+      const token = jwt.sign(
+        {
+          id: newUser._id,
+          isSeller: newUser.isSeller,
+          isAdmin: newUser.isAdmin,
+        },
+        process.env.JWT_SEC,
+        { expiresIn: "7d" }
+      );
+
+      const { password, ...others } = newUser._doc;
+      res.status(200).json({ ...others, token });
     } catch (error) {
       res.status(500);
       throw new Error(error?.message?.split(/:|,/)[2].trim()); //가장 최초의 오류를 던진다

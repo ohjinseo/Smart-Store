@@ -193,6 +193,8 @@ const Product = () => {
       try {
         const {data} = await axios.get(`${baseURL}/products/${productId}`);
         setProduct(data);
+        setColor(data?.color[0]);
+        setSize(data?.size[0]);
       } catch (error) {
         console.log(error);
       }

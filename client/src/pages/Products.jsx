@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -130,6 +132,10 @@ const Select = styled.select `
 const Option = styled.option ``;
 
 const Products = () => {
+  const location = useLocation();
+  const categoryName = location.pathname.split("/")[2];
+
+  const [sort, setSort] = useState("");
     return (
         <Container>
             <Topbar/>
@@ -187,9 +193,9 @@ const Products = () => {
                 </Left>
                 <Right>
                     <TitleBox>
-                        <Title>132 SHOESES</Title>
+                        <Title>{categoryName}</Title>
                         <Select>
-                            <Option>Latest</Option>
+                            <Option>LATEST</Option>
                             <Option>RATING</Option>
                             <Option>POPULAR</Option>
                             <Option>PRICE DESC</Option>
@@ -197,7 +203,7 @@ const Products = () => {
                         </Select>
                     </TitleBox>
 
-                    <ProductList kind={"all"}/>
+                    <ProductList category={categoryName}/>
 
                 </Right>
 

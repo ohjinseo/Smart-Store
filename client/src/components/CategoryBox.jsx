@@ -63,7 +63,7 @@ const CategoryBox = ({item}) => {
 
         <Container bgColor={item.bgColor}>
             <Link
-                to="/products/nike"
+                to={`/products/${item.title}`}
                 style={{
                     textDecoration: "none",
                     color: "inherit"

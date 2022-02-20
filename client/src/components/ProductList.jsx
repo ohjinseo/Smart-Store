@@ -10,20 +10,21 @@ const Container = styled.div`
   justify-content: space-around;
 `;
 
-const ProductList = ({kind}) => {
+const ProductList = ({kind, category}) => {
   const [products, setProducts] = useState([]);
   
   useEffect(()=>{
     const getProducts = async () => {
       try {
-        const {data} = await axios.get(`${baseURL}/products?kind=${kind}`);
+        const {data} = kind ? await axios.get(`${baseURL}/products?kind=${kind}`) : 
+        await axios.get(`${baseURL}/products?category=${category}`);
         setProducts(data);
       } catch (error) {
         console.log(error);
       }
     }
     getProducts();
-  }, [kind])
+  }, [category, kind])
 
   return (
     <Container>

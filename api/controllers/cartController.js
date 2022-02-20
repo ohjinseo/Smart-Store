@@ -5,7 +5,7 @@ const cartController = {
   // 사용자 전용 카트 생성
   register: expressAsyncHandler(async (req, res) => {
     try {
-      const cart = await Cart.create({ userId: req.params.userId });
+      const cart = await Cart.create({ userId: req.user.id });
       res.status(200).json(cart);
     } catch (error) {
       throw new Error(error);

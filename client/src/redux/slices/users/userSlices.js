@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { baseURL } from "../../../utils/baseURL";
+import { registerCartAction } from "../carts/cartSlice";
 
 //함수 반환 값은 payload로
 export const loginUserAction = createAsyncThunk(
@@ -36,7 +37,13 @@ export const registerUserAction = createAsyncThunk(
       },
     };
     try {
-      const res = await axios.post(`${baseURL}/auth/register`, payload, config);
+      const { data } = await axios.post(
+        `${baseURL}/auth/register`,
+        payload,
+        config
+      );
+      console.log(data);
+      dispatch(registerCartAction({ token: data.token }));
     } catch (error) {
       return rejectWithValue(error?.response?.data);
     }

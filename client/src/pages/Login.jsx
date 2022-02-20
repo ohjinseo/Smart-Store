@@ -66,7 +66,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const res = useSelector(state => state.usersReducer);
-    const {userAppErr, userAuth, userLoading, userServerErr} = res;
+    const {userAppErr, userAuth, userLoading} = res;
 
     const handleSubmit = (e) => {
         e.preventDefault();
