@@ -9,5 +9,6 @@ const router = require("express").Router();
 router.post("/", verifyTokenAndAdmin, productController.register);
 router.get("/", productController.getProducts);
 router.delete("/:id", verifyTokenAndAdmin, productController.delete);
+router.get("/:productId", productController.getProduct);
 
 module.exports = router;

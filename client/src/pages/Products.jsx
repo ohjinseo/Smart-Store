@@ -197,8 +197,7 @@ const Products = () => {
                         </Select>
                     </TitleBox>
 
-                    <ProductList/>
-                    <ProductList/>
+                    <ProductList kind={"all"}/>
 
                 </Right>
 

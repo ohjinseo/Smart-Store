@@ -19,7 +19,6 @@ export const loginUserAction = createAsyncThunk(
         config
       );
 
-      //Save user into localstorage
       localStorage.setItem("userInfo", JSON.stringify(data));
       return data;
     } catch (error) {
@@ -37,9 +36,7 @@ export const registerUserAction = createAsyncThunk(
       },
     };
     try {
-      console.log(payload);
       const res = await axios.post(`${baseURL}/auth/register`, payload, config);
-      console.log(res);
     } catch (error) {
       return rejectWithValue(error?.response?.data);
     }
@@ -60,7 +57,7 @@ export const logout = createAsyncThunk(
   }
 );
 
-//Get user from localStorage and place it inside our store
+//로컬스토리지로부터 userinfo init
 const userLoginFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : undefined;
@@ -71,7 +68,7 @@ const usersSlices = createSlice({
     userAuth: userLoginFromStorage,
   },
   extraReducers: (builder) => {
-    //LOGIN
+    // 로그인
     builder.addCase(loginUserAction.pending, (state, action) => {
       state.userLoading = true;
       state.userAppErr = undefined;
@@ -91,7 +88,7 @@ const usersSlices = createSlice({
       state.userServerErr = action?.error?.message;
     });
 
-    //REGISTER
+    //회원가입
     builder.addCase(registerUserAction.pending, (state, action) => {
       state.userLoading = true;
       state.userAppErr = undefined;
@@ -111,7 +108,7 @@ const usersSlices = createSlice({
       state.userServerErr = action?.payload?.error?.message;
     });
 
-    //LOGOUT
+    //로그아웃
     builder.addCase(logout.fulfilled, (state, action) => {
       state.userLoading = false;
       state.userAuth = undefined;

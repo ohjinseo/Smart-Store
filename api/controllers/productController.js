@@ -34,7 +34,8 @@ const productController = {
       }
       res.status(200).json(products);
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500);
+      throw new Error(error);
     }
   }),
 
@@ -44,6 +45,18 @@ const productController = {
       const deletePost = await Product.findById(req.params.id);
       await deletePost.delete();
       res.status(200).json("상품이 삭제되었습니다");
+    } catch (error) {
+      res.status(500);
+      throw new Error(error);
+    }
+  }),
+
+  // 상품ID로 상품 가져오기
+  getProduct: expressAsyncHandler(async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.productId);
+      !product && res.status(404).json("상품을 찾을 수 없습니다");
+      res.status(200).json(product);
     } catch (error) {
       res.status(500);
       throw new Error(error);

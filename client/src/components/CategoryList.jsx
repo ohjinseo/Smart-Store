@@ -15,7 +15,9 @@ const CategoryList = () => {
     return (
         <Container>
             <Wrapper>
-                {carData.map(item => (<CategoryBox item={item}/>))}
+                {carData.map((item, idx) => 
+                (<CategoryBox key={idx} item={item}/>
+                    ))}
             </Wrapper>
         </Container>
     )

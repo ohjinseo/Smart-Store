@@ -55,12 +55,11 @@ const Price = styled.span `
 `;
 
 const ProductBox = ({data}) => {
-  console.log(data);
     return (
 
         <Container>
             <Link
-                to="/product/123"
+                to={`/product/${data._id}`}
                 style={{
                     textDecoration: "none",
                     color: "inherit"

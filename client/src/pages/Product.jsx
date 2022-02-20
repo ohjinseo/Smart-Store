@@ -1,8 +1,12 @@
 import {Add, Remove, StarRate, StarRateOutlined} from '@material-ui/icons';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
+import { baseURL } from '../utils/baseURL';
 
 const Container = styled.div `
 `;
@@ -88,8 +92,8 @@ const Color = styled.li `
   height:25px;
   border-radius:50%;
   background-color:${props => props.color};
-  margin-right:10px;
-  border:${props => props.select && "3px solid white"};
+  margin-right:15px;
+  border:${props => props.color === props.select && "3px solid white"};
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
@@ -118,11 +122,10 @@ const Size = styled.li `
   align-items: center;
   justify-content: center;
   margin-right: 10px;
-  background-color:${props => props.select && "#333"};
-  color:${props => props.select && "white"};
-  box-shadow: ${props => props.select && "rgba(0, 0, 0, 0.24) 0px 3px 8px"};
+  background-color:${props => props.children === props.select && "#333"};
+  color:${props => props.children === props.select && "white"};
+  box-shadow: ${props => props.children === props.select && "rgba(0, 0, 0, 0.24) 0px 3px 8px"};
 `;
-
 const Price = styled.div `
   font-size: 34px;
   font-weight: 500;
@@ -164,7 +167,7 @@ const Buttons = styled.div `
 const Button = styled.button `
   padding:15px 30px;
   border:none;
-  background-color:${props => props.title == "Add"
+  background-color:${props => props.title === "Add"
     ? "teal"
     : "crimson"};
   color:white;
@@ -176,6 +179,35 @@ const Button = styled.button `
 `;
 
 const Product = () => {
+  const location = useLocation();
+  const productId = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [size, setSize] = useState();
+  const [color, setColor] = useState();
+  const [count, setCount] = useState(1);
+
+  console.log(size);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const {data} = await axios.get(`${baseURL}/products/${productId}`);
+        setProduct(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getProduct();
+  }, [productId])
+
+  const handleCount = (kind) => {
+    if(kind === "add" && count < 10){
+      setCount(count + 1);
+    }else if(kind === "minus" && count > 1){
+      setCount(count - 1);
+    }
+  }
+  
     return (
         <Container>
             <Topbar/>
@@ -183,12 +215,12 @@ const Product = () => {
 
             <Wrapper>
                 <Left>
-                    <Image src="https://i.ibb.co/NsxfVLt/pngegg-19.png"></Image>
+                    <Image src={product?.img}></Image>
                 </Left>
 
                 <Right>
                     <Brand>NIKE</Brand>
-                    <Title>NIKE AIR SHOSES</Title>
+                    <Title>{product?.title}</Title>
 
                     <ReviewBox>
                         <Stars>
@@ -204,29 +236,29 @@ const Product = () => {
                     </ReviewBox>
 
                     <Colors>
-                        <Color color="gray" select="select"></Color>
-                        <Color color="darkblue"></Color>
+                    {product?.color?.map((c, idx) => (
+                        <Color key={idx} onClick={() => setColor(c)} 
+                        color={c} select={color}></Color>
+                    ))}
                     </Colors>
 
                     <Desc>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto, eius.
-                        Provident, repudiandae voluptate amet quidem, optio in modi, nostrum eligendi
-                        architecto ipsa cupiditate iste pariatur exercitationem est voluptatum iure
-                        nulla?
+                        {product?.desc}
                     </Desc>
 
                     <Sizes>
-                        <Size select="select">M</Size>
-                        <Size>S</Size>
-                        <Size>L</Size>
+                      {product?.size?.map((s, idx) => (
+                        <Size key={idx} onClick={() => setSize(s)} 
+                        select={size}>{s}</Size>
+                      ))}
                     </Sizes>
 
-                    <Price>$256.50</Price>
+                    <Price>{`$ ${product?.price}`}</Price>
 
                     <CountBox>
-                        <CountIcon><Remove/></CountIcon>
-                        <Count>1</Count>
-                        <CountIcon><Add/></CountIcon>
+                        <CountIcon onClick={() => handleCount("minus")}><Remove/></CountIcon>
+                        <Count>{count}</Count>
+                        <CountIcon onClick={() => handleCount("add")}><Add/></CountIcon>
                     </CountBox>
 
                     <Buttons>
