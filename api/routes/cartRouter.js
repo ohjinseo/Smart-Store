@@ -6,7 +6,7 @@ const {
 const router = require("express").Router();
 
 router.post("/", authMiddleware, cartController.register);
-router.put("/:userId", verifyTokenAndAuth, cartController.update);
-router.get("/:userId", verifyTokenAndAuth, cartController.getCart);
+router.put("/:productId", authMiddleware, cartController.update);
+router.get("/", authMiddleware, cartController.getCart);
 
 module.exports = router;

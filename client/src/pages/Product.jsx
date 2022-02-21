@@ -1,11 +1,13 @@
 import {Add, Remove, StarRate, StarRateOutlined} from '@material-ui/icons';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
+import { addProductAction } from '../redux/slices/carts/cartSlice';
 import { baseURL } from '../utils/baseURL';
 
 const Container = styled.div `
@@ -179,14 +181,13 @@ const Button = styled.button `
 `;
 
 const Product = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
   const [size, setSize] = useState();
   const [color, setColor] = useState();
   const [count, setCount] = useState(1);
-
-  console.log(size);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -208,6 +209,10 @@ const Product = () => {
     }else if(kind === "minus" && count > 1){
       setCount(count - 1);
     }
+  }
+
+  const handleClick = () => {
+    dispatch(addProductAction({productId, color, size, count}));
   }
   
     return (
@@ -264,7 +269,7 @@ const Product = () => {
                     </CountBox>
 
                     <Buttons>
-                        <Button title="Add">ADD TO CART</Button>
+                        <Button onClick={handleClick} title="Add">ADD TO CART</Button>
                         <Button>BUY NOW</Button>
                     </Buttons>
                 </Right>

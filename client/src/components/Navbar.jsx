@@ -2,6 +2,9 @@ import styled from "styled-components";
 import {Badge} from '@material-ui/core'
 import {PersonOutlineOutlined, ShoppingCartOutlined} from '@material-ui/icons'
 import {Link} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { getUserCartAction } from '../redux/slices/carts/cartSlice';
 
 const Container = styled.div `
   
@@ -71,7 +74,14 @@ const Icon = styled.div `
 border:2px solid gray;
 `;
 
-const Navbar = () => {
+const Navbar = () => { 
+  const dispatch = useDispatch();
+  const {total} = useSelector(state => state.cartsReducer);
+
+  useEffect(() => {
+    dispatch(getUserCartAction());
+  }, [dispatch])
+  
     return (
         <Container>
             <Wrapper>
@@ -101,7 +111,7 @@ const Navbar = () => {
                     <Link to="/cart" style={{textDecoration:"none", color:"inherit"}}>
 
                     <BadgeItem>
-                        <Badge badgeContent={1} color="primary">
+                        <Badge badgeContent={total} color="primary">
                             <ShoppingCartOutlined color="action"/>
                         </Badge>
                     </BadgeItem>

@@ -17,18 +17,19 @@ const cartController = {
   update: expressAsyncHandler(async (req, res) => {
     try {
       let cart;
-      const userId = req.params.userId;
-      const productId = req.body.productId;
+      const userId = req.user.id;
+      const productId = req.params.productId.trim();
       const kind = req.query.kind;
+      const count = req.query.count;
       let duplicate = false;
       let productObjId;
 
       cart = await Cart.findOne({ userId });
 
-      !cart && res.status(500).json("사용자의 카트 정보를 찾을 수 없습니다.");
+      !cart && res.status(404).json("사용자의 카트 정보를 찾을 수 없습니다.");
 
       if (cart.userId !== req.user.id) {
-        res.status(500).json("사용자 카트가 아닙니다.");
+        res.status(404).json("사용자 카트가 아닙니다.");
       }
       const cartId = cart._id;
 
@@ -45,9 +46,9 @@ const cartController = {
           },
           { new: true }
         );
+        // 상품이 존재하는지
       } else {
         cart?.products.forEach((product) => {
-          console.log("first");
           if (productId === product.productId.toString()) {
             productObjId = product.productId;
             duplicate = true;
@@ -62,7 +63,7 @@ const cartController = {
             },
             {
               $inc: {
-                "products.$.amount": 1,
+                "products.$.amount": count,
               },
             },
             { new: true }
@@ -83,7 +84,6 @@ const cartController = {
         }
 
         if (!duplicate && kind === "add") {
-          console.log(cartId, productId);
           cart = await Cart.findByIdAndUpdate(
             cartId,
             {
@@ -112,6 +112,7 @@ const cartController = {
 
       res.status(200).json(cart);
     } catch (error) {
+      res.status(500);
       throw new Error(error);
     }
   }),
@@ -119,10 +120,11 @@ const cartController = {
   // 사용자 카트 가져오기
   getCart: expressAsyncHandler(async (req, res) => {
     try {
-      const cart = await Cart.findOne({ userId: req.params.userId });
-      !cart && res.status(500).json("사용자 카트를 찾을 수 없습니다");
+      const cart = await Cart.findOne({ userId: req.user.id });
+      !cart && res.status(404).json("사용자 카트를 찾을 수 없습니다");
       res.status(200).json(cart);
     } catch (error) {
+      res.status(500);
       throw new Error(error);
     }
   }),

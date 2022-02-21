@@ -80,8 +80,6 @@ const Register = () => {
     const res = useSelector(state => state.usersReducer);
     const {userAppErr, userLoading, userServerErr, isRegistered} = res;
 
-    console.log(userAppErr);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(registerUserAction({name:username, email, password, checkPassword}))
