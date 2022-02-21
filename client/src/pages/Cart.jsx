@@ -1,11 +1,13 @@
-import {Add, Remove} from '@material-ui/icons';
+import {Add, CancelOutlined, Remove} from '@material-ui/icons';
+import { useEffect } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
+import { addProductAction, deleteProductAction } from '../redux/slices/carts/cartSlice';
 
 const Container = styled.div ``;
 
@@ -79,7 +81,7 @@ const ProductBox = styled.div `
     margin-bottom: 30px;
     padding-top:30px;
     border-top:1px solid #ebebeb;
-    
+    position:relative;
     
 `;
 
@@ -96,7 +98,7 @@ position: relative;
 overflow: hidden;
 height:100px;
 padding:22px 0;
-background-color:#ececec;
+background-color:#f1f1f1;
 `;
 
 const ProductImage = styled.img `
@@ -110,14 +112,11 @@ const ProductImage = styled.img `
   object-fit:cover;
   height: auto;
   margin:auto;
-    
-    
 `;
 
 const ProductDetail = styled.div `
     flex:2.1;
-    margin-left: 10px;
-    
+    margin-left: 20px;
 `;
 
 const ProductTitle = styled.p `
@@ -178,7 +177,7 @@ const ProductAmountBox = styled.div `
 `;
 
 const CountIcon = styled.div `
-
+    cursor:pointer;
 `;
 
 const Count = styled.span `
@@ -197,7 +196,18 @@ const ProductPrice = styled.div `
     font-weight: 300;
 `;
 
-const ProductCancel = styled.div ``;
+const ProductCancel = styled.div `
+    position:absolute;
+    right:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    padding:2px 4px;
+    background-color:crimson;
+    color:white;
+    cursor:pointer;
+`;
 
 const ProductCancelIcon = styled.div ``;
 
@@ -208,7 +218,6 @@ const Right = styled.div `
     display: flex;
     flex-direction: column;
     align-items: center;
-   
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
@@ -305,8 +314,40 @@ const CheckoutButton = styled.button `
 `;
 
 const Cart = () => {
-    const [carts, setCarts] = useState({});
-    const {cart} = useSelector(state => state.cartsReducer);
+    const dispatch = useDispatch();
+    const {cart, totalPrice} = useSelector(state => state.cartsReducer);
+    console.log(totalPrice);
+
+    useEffect(() => {
+        if(cart){
+            cart.products.forEach((product) => {
+                //console.log(product);
+            })
+        }
+    },[cart])
+    
+    // add, delete, all
+    const handleProductAmountControl = (kind, productId, amount) => {
+        if(kind === "add" && amount < 9){
+            dispatch(addProductAction({productId, count:1}));
+        }
+        else if(kind === "delete" && amount > 1){
+            dispatch(deleteProductAction({productId, kind}));
+        }
+        else if(kind === "all"){
+            if(window.confirm("상품을 정말 취소하시겠습니까?")){
+                dispatch(deleteProductAction({productId, kind}));
+            }
+        }
+        else if(amount >= 9){
+            window.confirm("상품은 10개 미만으로 주문 가능합니다");
+        }
+        else if(amount <= 1){
+            if(window.confirm("상품을 정말 취소하시겠습니까?")){
+                dispatch(deleteProductAction({productId, kind:"all"}));
+            }
+        }
+    }
 
     return (
         <Container>
@@ -353,28 +394,35 @@ const Cart = () => {
                         </ProductImageAndDetailBox>
 
                         <ProductColorBox>
-                            <ProductColor color={product?.productId?.color[0]}></ProductColor>
-
+                            {product?.productId?.color?.map((c, idx) => (
+                                <ProductColor key={idx} color={c}></ProductColor>
+                            ))}
                         </ProductColorBox>
 
                         <ProductSizeBox>
-                            <ProductSize>{product?.productId?.size[0]}</ProductSize>
+                            {product?.productId?.size?.map((s, idx) => (
+                                <ProductSize key={idx}>{s}</ProductSize>
+                            ))}
                         </ProductSizeBox>
 
                         <ProductAmountBox>
-                            <CountIcon><Remove/></CountIcon>
+                            <CountIcon><Remove onClick={(e) => 
+                                handleProductAmountControl("delete", product?.productId?._id, product?.amount)}/></CountIcon>
                             <Count>{product?.amount}</Count>
-                            <CountIcon><Add/></CountIcon>
+
+                            <CountIcon><Add onClick={() => 
+                                handleProductAmountControl("add", product?.productId?._id, product?.amount)}/></CountIcon>
                         </ProductAmountBox>
 
                         <ProductPriceBox>
                             <ProductPrice>$ {product?.productId?.price}</ProductPrice>
                         </ProductPriceBox>
 
-                        {/* <ProductCancel>
-                            <ProductCancelIcon><CancelOutlined/></ProductCancelIcon>
-                            </ProductCancel> */
-                        }
+                        <ProductCancel>
+                            <ProductCancelIcon onClick={() => 
+                                handleProductAmountControl("all", product?.productId?._id)}>취소</ProductCancelIcon>
+                        </ProductCancel> 
+                        
                     </ProductBox>
                         )}
                 </Left>
@@ -386,7 +434,7 @@ const Cart = () => {
                             <TotalProductsBox>
 
                                 <TotalProductsText>TotalProduct</TotalProductsText>
-                                <TotalProducts>$245.80</TotalProducts>
+                                <TotalProducts>$ {totalPrice}</TotalProducts>
 
                             </TotalProductsBox>
 
@@ -397,12 +445,12 @@ const Cart = () => {
 
                             <DiscountBox>
                                 <DiscountText>Discount Costs</DiscountText>
-                                <Discount>$-5.90</Discount>
+                                <Discount>$ 0</Discount>
                             </DiscountBox>
 
                             <TotalBox>
                                 <TotalText>Total</TotalText>
-                                <Total>$239.00</Total>
+                                <Total>$ {totalPrice}</Total>
                             </TotalBox>
 
                         </SummaryDetails>

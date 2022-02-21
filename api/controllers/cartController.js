@@ -90,6 +90,7 @@ const cartController = {
               $push: {
                 products: {
                   productId,
+                  amount: count,
                 },
               },
             },
