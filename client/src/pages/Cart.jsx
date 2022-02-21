@@ -1,4 +1,6 @@
 import {Add, Remove} from '@material-ui/icons';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -299,6 +301,11 @@ const CheckoutButton = styled.button `
 `;
 
 const Cart = () => {
+    const [cart, setCart] = useState({});
+    const res = useSelector(state => state.cartsReducer);
+    console.log(res);
+
+
     return (
         <Container>
             <Topbar/>
