@@ -1,6 +1,7 @@
 import {Add, Remove} from '@material-ui/icons';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -123,6 +124,9 @@ const ProductTitle = styled.p `
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 10px;
+    &:hover{
+        text-decoration: underline;
+    }
 `;
 
 const ProductBrand = styled.p `
@@ -326,13 +330,24 @@ const Cart = () => {
 {cart?.products?.map((product) => 
                     <ProductBox key={product?.productId?._id}>
                         <ProductImageAndDetailBox>
-
                             <ProductImageBox>
-
+                        <Link
+                to={`/product/${product?.productId?._id}`}
+                style={{
+                    textDecoration: "none",
+                    color: "inherit"
+                }}>
                                 <ProductImage src={product?.productId?.img}/>
+                            </Link>
                             </ProductImageBox>
                             <ProductDetail>
-                                <ProductTitle>{product?.productId?.title}</ProductTitle>
+                                <ProductTitle>
+                                <Link
+                to={`/product/${product?.productId?._id}`}
+                style={{
+                    textDecoration: "none",
+                    color: "inherit"
+                }}>{product?.productId?.title}</Link></ProductTitle>
                                 <ProductBrand>{product?.productId?.categories[0]}</ProductBrand>
                             </ProductDetail>
                         </ProductImageAndDetailBox>
