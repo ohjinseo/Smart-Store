@@ -62,7 +62,6 @@ export const getUserCartAction = createAsyncThunk(
       };
 
       const { data } = await axios.get(`${baseURL}/carts/`, config);
-      console.log(data?.products);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);

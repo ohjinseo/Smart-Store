@@ -104,8 +104,8 @@ const ProductImage = styled.img `
   left: 0; 
   right: 0; 
   bottom: 0; 
-  max-width: 100%; 
-  max-height:100%;
+  max-width: 80%; 
+  max-height:80%;
   object-fit:cover;
   height: auto;
   margin:auto;
@@ -301,10 +301,8 @@ const CheckoutButton = styled.button `
 `;
 
 const Cart = () => {
-    const [cart, setCart] = useState({});
-    const res = useSelector(state => state.cartsReducer);
-    console.log(res);
-
+    const [carts, setCarts] = useState({});
+    const {cart} = useSelector(state => state.cartsReducer);
 
     return (
         <Container>
@@ -325,119 +323,45 @@ const Cart = () => {
                         <Amount>AMOUNT</Amount>
                         <Price>PRICE</Price>
                     </Details>
-
-                    <ProductBox>
+{cart?.products?.map((product) => 
+                    <ProductBox key={product?.productId?._id}>
                         <ProductImageAndDetailBox>
 
                             <ProductImageBox>
 
-                                <ProductImage src="https://i.ibb.co/q1zBpFs/pngegg-18.png"/>
+                                <ProductImage src={product?.productId?.img}/>
                             </ProductImageBox>
                             <ProductDetail>
-                                <ProductTitle>NIKE AIR SHOSES</ProductTitle>
-                                <ProductBrand>NIKE</ProductBrand>
+                                <ProductTitle>{product?.productId?.title}</ProductTitle>
+                                <ProductBrand>{product?.productId?.categories[0]}</ProductBrand>
                             </ProductDetail>
                         </ProductImageAndDetailBox>
 
                         <ProductColorBox>
-                            <ProductColor color="yellow"></ProductColor>
+                            <ProductColor color={product?.productId?.color[0]}></ProductColor>
 
                         </ProductColorBox>
 
                         <ProductSizeBox>
-                            <ProductSize>M</ProductSize>
+                            <ProductSize>{product?.productId?.size[0]}</ProductSize>
                         </ProductSizeBox>
 
                         <ProductAmountBox>
                             <CountIcon><Remove/></CountIcon>
-                            <Count>1</Count>
+                            <Count>{product?.amount}</Count>
                             <CountIcon><Add/></CountIcon>
                         </ProductAmountBox>
 
                         <ProductPriceBox>
-                            <ProductPrice>$192.44</ProductPrice>
+                            <ProductPrice>$ {product?.productId?.price}</ProductPrice>
                         </ProductPriceBox>
 
                         {/* <ProductCancel>
                             <ProductCancelIcon><CancelOutlined/></ProductCancelIcon>
-                        </ProductCancel> */
+                            </ProductCancel> */
                         }
                     </ProductBox>
-
-                    <ProductBox>
-                        <ProductImageAndDetailBox>
-
-                            <ProductImageBox>
-
-                                <ProductImage src="https://i.ibb.co/XFGzVW2/pngegg-17.png"/>
-                            </ProductImageBox>
-                            <ProductDetail>
-                                <ProductTitle>NIKE AIR SHOSES</ProductTitle>
-                                <ProductBrand>NIKE</ProductBrand>
-                            </ProductDetail>
-                        </ProductImageAndDetailBox>
-
-                        <ProductColorBox>
-                            <ProductColor color="yellow"></ProductColor>
-                        </ProductColorBox>
-
-                        <ProductSizeBox>
-                            <ProductSize>M</ProductSize>
-                        </ProductSizeBox>
-
-                        <ProductAmountBox>
-                            <CountIcon><Remove/></CountIcon>
-                            <Count>1</Count>
-                            <CountIcon><Add/></CountIcon>
-                        </ProductAmountBox>
-
-                        <ProductPriceBox>
-                            <ProductPrice>$192.44</ProductPrice>
-                        </ProductPriceBox>
-
-                        {/* <ProductCancel>
-                            <ProductCancelIcon><CancelOutlined/></ProductCancelIcon>
-                        </ProductCancel> */
-                        }
-                    </ProductBox>
-
-                    <ProductBox>
-                        <ProductImageAndDetailBox>
-
-                            <ProductImageBox>
-
-                                <ProductImage src="https://i.ibb.co/9r5hGdX/Pngegg-6.png"/>
-                            </ProductImageBox>
-                            <ProductDetail>
-                                <ProductTitle>NIKE AIR SHOSES</ProductTitle>
-                                <ProductBrand>NIKE</ProductBrand>
-                            </ProductDetail>
-                        </ProductImageAndDetailBox>
-
-                        <ProductColorBox>
-                            <ProductColor color="teal"></ProductColor>
-                        </ProductColorBox>
-
-                        <ProductSizeBox>
-                            <ProductSize>M</ProductSize>
-                        </ProductSizeBox>
-
-                        <ProductAmountBox>
-                            <CountIcon><Remove/></CountIcon>
-                            <Count>1</Count>
-                            <CountIcon><Add/></CountIcon>
-                        </ProductAmountBox>
-
-                        <ProductPriceBox>
-                            <ProductPrice>$192.44</ProductPrice>
-                        </ProductPriceBox>
-
-                        {/* <ProductCancel>
-                            <ProductCancelIcon><CancelOutlined/></ProductCancelIcon>
-                        </ProductCancel> */
-                        }
-                    </ProductBox>
-
+                        )}
                 </Left>
 
                 <Right>

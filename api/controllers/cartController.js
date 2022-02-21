@@ -125,8 +125,6 @@ const cartController = {
         model: "Product",
       });
 
-      console.log(cart);
-
       !cart && res.status(404).json("사용자 카트를 찾을 수 없습니다");
       res.status(200).json(cart);
     } catch (error) {
