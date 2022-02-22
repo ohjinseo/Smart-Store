@@ -15,7 +15,7 @@ const Products = styled.div`
 
 const Wrapper = styled.div`
     padding-top: 2px;
-    width: 80%;
+    width: 95%;
     position: relative;
 `;
 
@@ -23,11 +23,6 @@ const ProductListBox = styled.div`
   margin-top: 100px;
   margin-bottom: 250px;
 `;
-
-
-
-
-
 
 function Categories() {
   return (

@@ -10,13 +10,18 @@ const Container = styled.div`
 `;
 
 const BoxTop = styled.div`
-  width:90%;
+  width:95%;
+  height:400px;
   cursor:pointer;
+  background-color:#ece8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 350px;
+  max-width: 90%; 
+  max-height:90%;
   object-fit: cover;
 `;
 
@@ -42,7 +47,7 @@ function ProductBox2() {
   return (
     <Container>
       <BoxTop>
-        <Image src="https://images.unsplash.com/photo-1555689502-c4b22d76c56f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" />
+        <Image src="https://i.ibb.co/NsxfVLt/pngegg-19.png" />
       </BoxTop>
       <BoxBottom>
         <Title>

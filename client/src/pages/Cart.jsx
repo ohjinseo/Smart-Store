@@ -98,7 +98,7 @@ position: relative;
 overflow: hidden;
 height:100px;
 padding:22px 0;
-background-color:#f1f1f1;
+background-color:#faf4f4;
 `;
 
 const ProductImage = styled.img `
@@ -224,6 +224,7 @@ const SummaryBox = styled.div `
     margin-top:110px;
     padding:60px 30px;
     border:2px solid #f1f1f1;
+    background-color:#f4f4fc;
 `;
 
 const RightTitle = styled.h1 `
