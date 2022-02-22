@@ -136,6 +136,9 @@ const Products = () => {
   const categoryName = location.pathname.split("/")[2];
 
   const [sort, setSort] = useState("");
+  const [sizes, setSizes] = useState([]);
+  const [colors, setColors] = useState([]);
+  
     return (
         <Container>
             <Topbar/>
@@ -193,7 +196,7 @@ const Products = () => {
                 </Left>
                 <Right>
                     <TitleBox>
-                        <Title>{categoryName}</Title>
+                        <Title>{categoryName ? categoryName : "ALL PRODUCTS"}</Title>
                         <Select>
                             <Option>LATEST</Option>
                             <Option>RATING</Option>

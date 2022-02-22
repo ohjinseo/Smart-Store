@@ -102,8 +102,22 @@ const Navbar = () => {
                     <Menu>
                         <MenuItem>NEWEST</MenuItem>
                         <MenuItem>MODELS</MenuItem>
+                        <Link
+                to={`/products`}
+                style={{
+                    textDecoration: "none",
+                    color: "inherit"
+                }}>
                         <MenuItem>PRODUCT</MenuItem>
-                        <MenuItem>SERVICES</MenuItem>
+                        </Link>
+                        <Link
+                to={`/categories`}
+                style={{
+                    textDecoration: "none",
+                    color: "inherit"
+                }}>
+                        <MenuItem>CATEGORY</MenuItem>
+                        </Link>
                         <MenuItem>DISCOVER</MenuItem>
                     </Menu>
                 </Center>

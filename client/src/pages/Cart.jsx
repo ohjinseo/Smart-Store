@@ -213,17 +213,17 @@ const ProductCancelIcon = styled.div ``;
 
 const Right = styled.div `
     flex:1;
-    background-color:#f3f3f3;
     padding: 100px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
 const SummaryBox = styled.div `
     width:90%;
-    padding-top:110px;
+    margin-top:110px;
+    padding:60px 30px;
+    border:2px solid #f1f1f1;
 `;
 
 const RightTitle = styled.h1 `
