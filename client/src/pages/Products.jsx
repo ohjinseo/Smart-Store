@@ -1,3 +1,4 @@
+import { ReplayOutlined } from '@material-ui/icons';
 import {useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import styled from "styled-components";
@@ -31,6 +32,8 @@ const LeftTitle = styled.h1 `
   padding-bottom: 3px;
   display:inline-block;
 `;
+
+
 
 const LeftWrapper = styled.div `
   width:250px;
@@ -77,7 +80,7 @@ font-size: 14px;
 
 const Color = styled.div `
   width:90%;
-  margin-bottom: 15%;
+  margin-bottom: 2%;
 `;
 
 const ColorItems = styled.div `
@@ -105,18 +108,32 @@ const ColorItem = styled.div `
 `;
 
 const CheckImage = styled.img`
-position:absolute;
-top:-3px;
+  position:absolute;
+  top:-3px;
   display:${props => !props.filter.includes(props.color) && "none"};
   width:90%;
   height:90%;
-  
 `;
+
+
 
 const Brand = styled.div ``;
 
 const BrandItems = styled.div `
   margin-bottom:20px;
+`;
+
+const FilterInit = styled.p`
+  margin:10% 0 15% 0;
+  display:inline-block;
+  color:#7c7b7b;
+  font-size:16px;
+  font-weight: 500;
+  cursor:pointer;
+  text-decoration:underline;
+  display:flex;
+  align-items: center;
+  width:50%;
 `;
 
 const FilterTitle = styled.h2`
@@ -257,7 +274,7 @@ const Products = () => {
                 <Left>
                     <LeftWrapper>
                         <LeftTitle>FILTER</LeftTitle>
-
+                        
                         <Size>
                             <ItemTitle>Size</ItemTitle>
                             <SizeItems>
@@ -270,7 +287,7 @@ const Products = () => {
                         </Size>
 
                         <Color>
-                            <ItemTitle>Color</ItemTitle>
+                            <ItemTitle>Color </ItemTitle>
                             <ColorItems>
                                 {
                                     colorArray.map((c, idx) => (
@@ -282,7 +299,10 @@ const Products = () => {
                                 }
                             </ColorItems>
                         </Color>
-
+                        <FilterInit onClick={() => setFilter({sort: "latest", sizes: [], colors: []})}>FILTER RESET<ReplayOutlined style={{
+                          "marginLeft":"2px",
+                          "fontSize":"18px"
+                        }}/></FilterInit>
                         <Brand>
                             
                             <BrandItems>
