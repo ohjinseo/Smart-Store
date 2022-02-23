@@ -74,7 +74,7 @@ const ProductBox = ({data}) => {
                             {data?.title}
                         </Title>
 
-                        <Price>$22.99</Price>
+                        <Price>$ {data?.price || 0}</Price>
                     </Bottom>
                 </Wrapper>
             </Link>

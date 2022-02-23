@@ -26,7 +26,7 @@ const Left = styled.div `
 
 const LeftTitle = styled.h1 `
   font-weight: 200;
-  margin-bottom: 40px;
+  margin-bottom: 25%;
   border-bottom: 1px solid black;
   padding-bottom: 3px;
   display:inline-block;
@@ -48,7 +48,7 @@ const ItemTitle = styled.h3 `
 `;
 
 const Size = styled.div `
-  margin-bottom:40px;
+  margin-bottom:15%;
   width:80%;
 `;
 
@@ -71,11 +71,13 @@ font-size: 14px;
   align-items: center;
   justify-content: center;
   cursor:pointer;
+  background-color:${props => props.filter.includes(props.size) && "#333"};
+  color:${props => props.filter.includes(props.size) && "white"};
 `;
 
 const Color = styled.div `
   width:90%;
-  margin-bottom: 40px;
+  margin-bottom: 15%;
 `;
 
 const ColorItems = styled.div `
@@ -261,7 +263,7 @@ const Products = () => {
                             <SizeItems>
                                 {
                                     sizeArray.map(
-                                        (s, idx) => (<SizeItem key={idx} onClick={() => handleFilter("size", s)}>{s}</SizeItem>)
+                                        (s, idx) => (<SizeItem key={idx} filter={filter?.sizes} onClick={() => handleFilter("size", s)} size={s}>{s}</SizeItem>)
                                     )
                                 }
                             </SizeItems>
@@ -316,6 +318,7 @@ const Products = () => {
                             }</Title>
                         <Select onChange={e => handleFilter("sort", "", e)}>
                             <Option value="latest">LATEST</Option>
+                            <Option value="oldest">OLDEST</Option>
                             <Option value="rating">RATING</Option>
                             <Option value="popular">POPULAR</Option>
                             <Option value="desc">PRICE DESC</Option>
