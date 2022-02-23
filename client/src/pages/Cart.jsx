@@ -1,6 +1,8 @@
 import {Add, CancelOutlined, Remove} from '@material-ui/icons';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import StripeCheckout from "react-stripe-checkout";
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,6 +10,7 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
 import { addProductAction, deleteProductAction } from '../redux/slices/carts/cartSlice';
+import { baseURL } from '../utils/baseURL';
 
 const Container = styled.div ``;
 
@@ -223,8 +226,9 @@ const SummaryBox = styled.div `
     width:90%;
     margin-top:110px;
     padding:60px 30px;
-    border:2px solid #f1f1f1;
-    background-color:#f4f4fc;
+    border:1px solid #333;
+    //background-color:#f4f4fc;
+    border-radius:5px;
 `;
 
 const RightTitle = styled.h1 `
@@ -278,13 +282,13 @@ const DiscountBox = styled.div `
     align-items: center;
     color:crimson;
     padding-bottom: 30px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px dashed  black;
 `;
 
 const DiscountText = styled.div ``;
 
 const Discount = styled.div `
-font-size: 25px;
+    font-size: 25px;
     font-weight: 300;
 `;
 
@@ -317,15 +321,26 @@ const CheckoutButton = styled.button `
 const Cart = () => {
     const dispatch = useDispatch();
     const {cart, totalPrice} = useSelector(state => state.cartsReducer);
-    console.log(totalPrice);
+    const STRIPE_KEY = process.env.REACT_APP_STRIPE_KEY;
+    const [stripeToken, setStripeToken] = useState();
+
+    const onToken = (token) => {
+        setStripeToken(token);
+    }
 
     useEffect(() => {
-        if(cart){
-            cart.products.forEach((product) => {
-                //console.log(product);
-            })
+        const sendStripeToken = async () => {
+            try {
+                const res = await axios.post(`${baseURL}/products/checkout`, {
+                    tokenId:stripeToken
+                });
+                console.log(res);
+            } catch (error) {
+                
+            }
         }
-    },[cart])
+        sendStripeToken();
+    }, [stripeToken])
     
     // add, delete, all
     const handleProductAmountControl = (kind, productId, amount) => {
@@ -456,11 +471,21 @@ const Cart = () => {
 
                         </SummaryDetails>
 
-                        <CheckoutButton>
-                            CHECKOUT NOW
-                        </CheckoutButton>
+                        <StripeCheckout
+                        name="SMART-STORE"
+                        image="https://i.ibb.co/j657tqg/pngegg-23.png"
+                        billingAddress
+                        shippingAddress
+                        description={`총 금액 : ${totalPrice}`}
+                        amount={totalPrice}
+                        token={onToken}
+                        stripeKey={STRIPE_KEY}
+                        >
+                            <CheckoutButton>
+                                CHECKOUT NOW
+                            </CheckoutButton>
+                        </StripeCheckout>
                     </SummaryBox>
-
                 </Right>
             </Wrapper>
             <Footer/>

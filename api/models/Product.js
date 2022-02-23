@@ -7,6 +7,11 @@ const ProductSchema = new mongoose.Schema(
       type: String,
     },
 
+    //브랜드
+    brand: {
+      type: String,
+    },
+
     //설명
     desc: {
       type: String,
