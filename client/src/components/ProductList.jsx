@@ -11,10 +11,12 @@ const Container = styled.div`
   justify-content: space-around;
 `;
 
-const ProductList = ({kind}) => {
+const ProductList = ({filter, kind}) => {
   const [products, setProducts] = useState([]);
   const location = useLocation();
   const category = location.search.split("=")[1];
+
+  console.log(filter);
   
   useEffect(()=>{
     const getProducts = async () => {

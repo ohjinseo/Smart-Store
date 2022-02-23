@@ -20,9 +20,9 @@ const productController = {
       let products;
 
       if (kind === "new") {
-        products = await Product.find({}).sort({ createdAt: "desc" }).limit(8);
+        products = await Product.find({}).sort({ createdAt: "desc" }).limit(5);
       } else if (kind === "popular") {
-        products = await Product.find({}).sort({ sold: -1 }).limit(8);
+        products = await Product.find({}).sort({ sold: -1 }).limit(5);
       } else if (category) {
         products = await Product.find({
           categories: {

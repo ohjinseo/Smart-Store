@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const BoxTop = styled.div`
   width:95%;
-  height:400px;
+  height:450px;
   cursor:pointer;
   background-color:#ece8e8;
   display: flex;

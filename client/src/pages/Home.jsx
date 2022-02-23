@@ -5,9 +5,9 @@ import Slider from '../components/Slider';
 import Topbar from '../components/Topbar';
 import ProductList from '../components/ProductList';
 import Footer from '../components/Footer';
+import ProductList2 from '../components/ProductList2';
 
 const ProductContainer = styled.div`
-  padding:0 115px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,6 +36,7 @@ const Home = () => {
                 <ProductList kind={"new"}/>
                 <Title >TOP RATING</Title>
                 <ProductList kind={"popular"}/>
+               
             </ProductContainer>
             <Footer />
         </div>

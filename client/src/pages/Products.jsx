@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import styled from "styled-components";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -24,15 +24,15 @@ const Left = styled.div `
 
 `;
 
-const LeftTitle = styled.h1`
-  font-weight: 300;
-  margin-bottom: 60px;
-  border-bottom: 2px solid lightgray;
+const LeftTitle = styled.h1 `
+  font-weight: 200;
+  margin-bottom: 40px;
+  border-bottom: 1px solid black;
   padding-bottom: 3px;
   display:inline-block;
 `;
 
-const LeftWrapper = styled.div`
+const LeftWrapper = styled.div `
   width:250px;
   margin-left: 20px;
   position:sticky;
@@ -41,7 +41,6 @@ const LeftWrapper = styled.div`
   margin-bottom: 50px;
 `;
 
-
 const ItemTitle = styled.h3 `
   font-size: 20px;
   font-weight: 300;
@@ -49,13 +48,14 @@ const ItemTitle = styled.h3 `
 `;
 
 const Size = styled.div `
-  margin-bottom:60px;
+  margin-bottom:40px;
   width:80%;
 `;
 
 const SizeItems = styled.div `
   display: flex;
   flex-wrap:wrap;
+  
 `;
 
 const SizeItem = styled.div `
@@ -70,11 +70,12 @@ font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor:pointer;
 `;
 
 const Color = styled.div `
   width:90%;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 `;
 
 const ColorItems = styled.div `
@@ -85,28 +86,50 @@ const ColorItems = styled.div `
 const ColorItem = styled.div `
   width:20px;
   height:20px;
-  border-radius: 50%;
-  background-color:${props=>props.color};
+  border-radius: 5px;
+  background-color:${props => props.color};
   margin-right: 15px;
-  margin-bottom:15px;
+  margin-bottom:20px;
+  box-sizing:border-box;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  &:hover{
+    transform: scale(1.2);
+  }
+  cursor:pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position:relative;
+`;
+
+const CheckImage = styled.img`
+position:absolute;
+top:-3px;
+  display:${props => !props.filter.includes(props.color) && "none"};
+  width:90%;
+  height:90%;
+  
 `;
 
 const Brand = styled.div ``;
 
 const BrandItems = styled.div `
-  display: flex;
-  flex-wrap:wrap;
+  margin-bottom:20px;
+`;
+
+const FilterTitle = styled.h2`
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom:10px;
 `;
 
 const BrandItem = styled.div `
+  display:inline-box;
   border:1px solid gray;
   padding:2px 6px;
-  border-radius: 10px;
-  margin:0 10px 15px 0;
+  border-radius: 5px;
+  margin:0px 10px 10px 0;
 `;
-
-
 
 const Right = styled.div `
   flex:3;
@@ -132,13 +155,97 @@ const Select = styled.select `
 const Option = styled.option ``;
 
 const Products = () => {
-  const location = useLocation();
-  const categoryName = location.pathname.split("/")[2];
+    const location = useLocation();
+    const categoryName = location
+        .pathname
+        .split("/")[2];
+    const sizeArray = [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+    ];
+    const colorArray = [
+        "black",
+        "SlateGray",
+        "DimGray",
+        "Silver",
+        "WhiteSmoke",
+        "white",
+        "DarkSlateGray",
+        "CadetBlue",
+        "LightBlue",
+        "Red",
+        "Tomato",
+        "PeachPuff",
+        "MidnightBlue",
+        "Blue",
+        "CornflowerBlue",
+        "Indigo",
+        "MediumPurple",
+        "Lavender",
+        "Teal",
+        "MediumAquaMarine",
+        "Honeydew",
+        "Gold",
+        "Khaki",
+        "Ivory"
+    ]
+    const [filter, setFilter] = useState({sort: "latest", sizes: [], colors: []})
 
-  const [sort, setSort] = useState("");
-  const [sizes, setSizes] = useState([]);
-  const [colors, setColors] = useState([]);
-  
+    const handleFilter = (kind, s, e) => {
+        // eslint-disable-next-line default-case
+        switch (kind) {
+            case "size":
+                if (filter.sizes.includes(s)) {
+                    setFilter({
+                        ...filter,
+                        sizes: filter
+                            .sizes
+                            .filter((size) => size !== s)
+                    })
+                } else {
+                    setFilter({
+                        ...filter,
+                        sizes: [
+                            ...filter.sizes,
+                            s
+                        ]
+                    })
+                }
+                break
+
+            case "color":
+                if (filter.colors.includes(s)) {
+                    setFilter({
+                        ...filter,
+                        colors: filter
+                            .colors
+                            .filter((color) => color !== s)
+                    })
+                } else {
+                    setFilter({
+                        ...filter,
+                        colors: [
+                            ...filter.colors,
+                            s
+                        ]
+                    })
+                }
+                break
+
+            case "sort":
+                setFilter({
+                    ...filter,
+                    sort: e
+                        ?.target.value
+                })
+        }
+
+    }
+
     return (
         <Container>
             <Topbar/>
@@ -146,67 +253,77 @@ const Products = () => {
 
             <Wrapper>
                 <Left>
-                  <LeftWrapper>
-                  <LeftTitle>FILTER</LeftTitle>
+                    <LeftWrapper>
+                        <LeftTitle>FILTER</LeftTitle>
 
-                    <Size>
-                        <ItemTitle>Size</ItemTitle>
-                        <SizeItems>
-                            <SizeItem>XS</SizeItem>
-                            <SizeItem>S</SizeItem>
-                            <SizeItem>M</SizeItem>
-                            <SizeItem>L</SizeItem>
-                            <SizeItem>XL</SizeItem>
-                            <SizeItem>XXL</SizeItem>
-                        </SizeItems>
-                    </Size>
+                        <Size>
+                            <ItemTitle>Size</ItemTitle>
+                            <SizeItems>
+                                {
+                                    sizeArray.map(
+                                        (s, idx) => (<SizeItem key={idx} onClick={() => handleFilter("size", s)}>{s}</SizeItem>)
+                                    )
+                                }
+                            </SizeItems>
+                        </Size>
 
-                    <Color>
-                        <ItemTitle>Color</ItemTitle>
-                        <ColorItems>
-                            <ColorItem color="red"></ColorItem>
-                            <ColorItem color="orange"></ColorItem>
-                            <ColorItem color="yellow"></ColorItem>
-                            <ColorItem color="green"></ColorItem>
-                            <ColorItem color="blue"></ColorItem>
-                            <ColorItem color="darkblue"></ColorItem>
-                            <ColorItem color="purple"></ColorItem>
-                            <ColorItem color="crimson"></ColorItem>
-                            <ColorItem color="gray"></ColorItem>
-                            <ColorItem color="lightpink"></ColorItem>
-                            <ColorItem color="beige"></ColorItem>
-                            <ColorItem color="lightblue"></ColorItem>
-                        </ColorItems>
-                    </Color>
+                        <Color>
+                            <ItemTitle>Color</ItemTitle>
+                            <ColorItems>
+                                {
+                                    colorArray.map((c, idx) => (
+                                        <ColorItem key={idx} filter={filter?.colors} onClick={() => handleFilter("color", c)} color={c}>
+                                          <CheckImage filter={filter?.colors} color={c} src="https://i.ibb.co/HrCpmmS/check.png"/>
+                                        </ColorItem>
 
-                    <Brand>
-                        <ItemTitle>Brands</ItemTitle>
-                        <BrandItems>
-                            <BrandItem>Calvin Klien</BrandItem>
-                            <BrandItem>Nike</BrandItem>
-                            <BrandItem>Adidas</BrandItem>
-                            <BrandItem>Levis</BrandItem>
-                            <BrandItem>Tom Brown</BrandItem>
-                            <BrandItem>Shanel</BrandItem>
-                            <BrandItem>THE NORTH FACE</BrandItem>
-                        </BrandItems>
-                    </Brand>
+                                    ))
+                                }
+                            </ColorItems>
+                        </Color>
 
-                  </LeftWrapper>
+                        <Brand>
+                            
+                            <BrandItems>
+                              <FilterTitle>SORT FILTER</FilterTitle>
+                              <BrandItem>{filter.sort}</BrandItem>
+                            </BrandItems>
+
+                            <BrandItems>
+                              <FilterTitle>SIZE FILTER</FilterTitle>
+                              {filter?.sizes.map((s) => (
+                                <BrandItem>{s}</BrandItem>
+                              ))}
+                            </BrandItems>
+
+                            <BrandItems>
+                              <FilterTitle>COLOR FILTER</FilterTitle>
+                              <ColorItems>
+                              {filter?.colors.map((c, idx) => (
+                                <ColorItem key={idx}  color={c}></ColorItem>
+                              ))}
+                              </ColorItems>
+                            </BrandItems>
+                        </Brand>
+
+                    </LeftWrapper>
                 </Left>
                 <Right>
                     <TitleBox>
-                        <Title>{categoryName ? categoryName : "ALL PRODUCTS"}</Title>
-                        <Select>
-                            <Option>LATEST</Option>
-                            <Option>RATING</Option>
-                            <Option>POPULAR</Option>
-                            <Option>PRICE DESC</Option>
-                            <Option>PRICE ASC</Option>
+                        <Title>{
+                                categoryName
+                                    ? categoryName
+                                    : "ALL PRODUCTS"
+                            }</Title>
+                        <Select onChange={e => handleFilter("sort", "", e)}>
+                            <Option value="latest">LATEST</Option>
+                            <Option value="rating">RATING</Option>
+                            <Option value="popular">POPULAR</Option>
+                            <Option value="desc">PRICE DESC</Option>
+                            <Option value="asc">PRICE ASC</Option>
                         </Select>
                     </TitleBox>
 
-                    <ProductList category={categoryName}/>
+                    <ProductList filter={filter} category={categoryName}/>
 
                 </Right>
 

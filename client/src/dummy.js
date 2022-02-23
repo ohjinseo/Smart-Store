@@ -55,22 +55,6 @@ export const carData = [
     desc: "K1600GA",
     bgColor: "#e7edf5",
   },
-
-  {
-    id: 5,
-    img: "https://i.ibb.co/qyqTNc7/pngegg-3.png",
-    title: "BMW",
-    desc: "K1600GA",
-    bgColor: "#e7edf5",
-  },
-
-  {
-    id: 6,
-    img: "https://i.ibb.co/qyqTNc7/pngegg-3.png",
-    title: "BMW",
-    desc: "K1600GA",
-    bgColor: "#e7edf5",
-  },
 ];
 
 export const categoryData = [
