@@ -118,6 +118,21 @@ const cartController = {
     }
   }),
 
+  emptyCart: expressAsyncHandler(async (req, res) => {
+    try {
+      const cart = await Cart.findOneAndUpdate(
+        { userId: req.user.id },
+        { $unset: { products: [] } },
+        { new: true }
+      );
+
+      res.status(200).json(cart);
+    } catch (error) {
+      res.status(500);
+      throw new Error(error);
+    }
+  }),
+
   // 사용자 카트 가져오기
   getCart: expressAsyncHandler(async (req, res) => {
     try {

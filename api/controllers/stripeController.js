@@ -7,13 +7,14 @@ const stripeController = {
     stripe.charges.create(
       {
         source: req.body.tokenId,
+        amount: req.body.amount,
         currency: "usd",
       },
       (err, stripeRes) => {
         if (err) {
           res.status(500).json(err);
         } else {
-          stripeRes.status(200).json(stripeRes);
+          res.status(200).json(stripeRes);
         }
       }
     );

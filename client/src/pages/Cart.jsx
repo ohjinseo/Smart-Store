@@ -11,6 +11,7 @@ import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
 import { addProductAction, deleteProductAction } from '../redux/slices/carts/cartSlice';
 import { baseURL } from '../utils/baseURL';
+import { registerOrderAction } from '../redux/slices/orders/orderSlice';
 
 const Container = styled.div ``;
 
@@ -316,13 +317,15 @@ const CheckoutButton = styled.button `
     border:none;
     background-color:#333;
     color:white;
+    cursor:pointer;
 `;
 
 const Cart = () => {
     const dispatch = useDispatch();
     const {cart, totalPrice} = useSelector(state => state.cartsReducer);
+    const {userAuth} = useSelector(state=>state.usersReducer);
     const STRIPE_KEY = process.env.REACT_APP_STRIPE_KEY;
-    const [stripeToken, setStripeToken] = useState();
+    const [stripeToken, setStripeToken] = useState(null);
 
     const onToken = (token) => {
         setStripeToken(token);
@@ -331,15 +334,24 @@ const Cart = () => {
     useEffect(() => {
         const sendStripeToken = async () => {
             try {
-                const res = await axios.post(`${baseURL}/products/checkout`, {
-                    tokenId:stripeToken
-                });
-                console.log(res);
+                const userToken = userAuth?.token;
+                const config = {
+                    headers: {
+                      token: `Bearer ${userToken}`,
+                    },
+                  };
+
+                const res = await axios.post(`${baseURL}/checkout`, {
+                    tokenId:stripeToken.id,
+                    amount:totalPrice
+                }, config);
+
+                dispatch(registerOrderAction(res));
             } catch (error) {
                 
             }
         }
-        sendStripeToken();
+        stripeToken && sendStripeToken();
     }, [stripeToken])
     
     // add, delete, all

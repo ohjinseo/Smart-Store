@@ -78,6 +78,27 @@ export const deleteProductAction = createAsyncThunk(
   }
 );
 
+// 카트 물건 모두 비우기
+export const emptyCartAction = createAsyncThunk(
+  "cart/emptyCart",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    const token = getState()?.usersReducer?.userAuth?.token;
+
+    try {
+      const config = {
+        headers: {
+          token: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = axios.put(`${baseURL}/carts/update/empty`, null, config);
+      dispatch(getUserCartAction());
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const getUserCartAction = createAsyncThunk(
   "cart/getUserCart",
   async (payload, { rejectWithValue, getState, dispatch }) => {
@@ -165,6 +186,20 @@ const cartSlices = createSlice({
     });
 
     builder.addCase(getUserCartAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.payload?.message;
+    });
+
+    // 카트 모두 비우기
+    builder.addCase(emptyCartAction.pending, (state, action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(emptyCartAction.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(emptyCartAction.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload?.message;
     });
