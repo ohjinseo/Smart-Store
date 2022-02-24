@@ -79,8 +79,6 @@ const ProductList = ({filter, kind}) => {
         }
     }, [filter, products])
 
-    console.log(filterProducts);
-
     // SORT
     useEffect(() => {
 

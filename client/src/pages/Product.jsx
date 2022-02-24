@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar';
 import Topbar from '../components/Topbar';
 import { addProductAction } from '../redux/slices/carts/cartSlice';
 import { baseURL } from '../utils/baseURL';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const Container = styled.div `
 `;
@@ -188,6 +189,12 @@ const Product = () => {
   const [size, setSize] = useState();
   const [color, setColor] = useState();
   const [count, setCount] = useState(1);
+  const [addBar, setAddBar] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  
 
   useEffect(() => {
     const getProduct = async () => {
@@ -211,9 +218,17 @@ const Product = () => {
     }
   }
 
-  const handleClick = () => {
+  const { vertical, horizontal, open } = addBar;
+
+  const handleClick = (newState) => {
+    setAddBar({ open: true, ...newState });
     dispatch(addProductAction({productId, color, size, count}));
+    setCount(1);
   }
+
+  const handleClose = () => {
+    setAddBar({ ...addBar, open: false });
+  };
   
     return (
         <Container>
@@ -269,7 +284,16 @@ const Product = () => {
                     </CountBox>
 
                     <Buttons>
-                        <Button onClick={handleClick} title="Add">ADD TO CART</Button>
+                        <Button onClick={() => handleClick({ vertical: 'top', horizontal: 'right' })} title="Add">ADD TO CART</Button>
+                        <Snackbar
+              style={{marginTop:"70px",
+            }}
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={handleClose}
+                message="successfully added to shopping cart!"
+                key={vertical + horizontal}
+              />
                         <Button>BUY NOW</Button>
                     </Buttons>
                 </Right>

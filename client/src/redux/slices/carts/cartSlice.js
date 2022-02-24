@@ -99,11 +99,13 @@ export const emptyCartAction = createAsyncThunk(
   }
 );
 
+// 카트 가져오기
 export const getUserCartAction = createAsyncThunk(
   "cart/getUserCart",
   async (payload, { rejectWithValue, getState, dispatch }) => {
     const token = getState()?.usersReducer?.userAuth?.token;
     let totalPrice = 0;
+    let totalCount = 0;
 
     try {
       const config = {
@@ -114,10 +116,11 @@ export const getUserCartAction = createAsyncThunk(
 
       const { data } = await axios.get(`${baseURL}/carts/`, config);
       data?.products?.forEach((p) => {
+        totalCount += p?.amount;
         totalPrice += p?.productId?.price * p?.amount;
       });
 
-      return { data, totalPrice };
+      return { data, totalPrice, totalCount };
     } catch (error) {
       return rejectWithValue(error?.response?.data);
     }
@@ -181,7 +184,7 @@ const cartSlices = createSlice({
     builder.addCase(getUserCartAction.fulfilled, (state, action) => {
       state.loading = false;
       state.cart = action?.payload?.data;
-      state.total = action?.payload?.data?.products?.length;
+      state.total = action?.payload?.totalCount;
       state.totalPrice = action?.payload?.totalPrice;
     });
 
