@@ -37,7 +37,7 @@ function Navbar() {
             </Link>
 
             <Link
-                to="/"
+                to="/products"
                 style={{
                     textDecoration: "none",
                     color: "inherit",
@@ -69,7 +69,7 @@ function Navbar() {
             </Link>
 
             <Link
-                to="/"
+                to="/add/product"
                 style={{
                     textDecoration: "none",
                     color: "inherit",
